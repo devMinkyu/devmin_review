@@ -1,4 +1,4 @@
-package com.devmin.android_review.common
+package com.devmin.android_review.data.local
 
 import android.content.SharedPreferences
 import io.reactivex.rxjava3.core.Completable

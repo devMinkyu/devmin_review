@@ -6,6 +6,8 @@ import android.content.Context
 import android.content.SharedPreferences
 import android.content.res.Resources
 import androidx.preference.PreferenceManager
+import androidx.room.Room
+import com.devmin.android_review.data.local.AppDatabase
 import com.devmin.android_review.presentation.app.App
 import dagger.Module
 import dagger.Provides
@@ -36,4 +38,14 @@ class AppProviderModule {
         return context.resources
     }
 
+    @Provides
+    @Singleton
+    internal fun provideAppDataBase(
+        @Named("Application") context: Context
+    ): AppDatabase {
+        return Room.databaseBuilder(
+            context,
+            AppDatabase::class.java, "devmin-android-db"
+        ).build()
+    }
 }
