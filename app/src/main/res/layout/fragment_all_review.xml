@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <import type="android.view.View"/>
+        <import type="com.devmin.android_review.presentation.app.main.module.AllReviewFragment.ViewHandler" />
+        <import type="com.devmin.android_review.presentation.app.main.module.AllReviewFragmentViewModel" />
+
+        <variable
+            name="viewModel"
+            type="AllReviewFragmentViewModel" />
+
+        <variable
+            name="viewHandler"
+            type="ViewHandler" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/allReviewList"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

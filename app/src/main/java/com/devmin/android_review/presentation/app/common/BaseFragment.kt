@@ -15,6 +15,7 @@ import dagger.android.support.AndroidSupportInjection
 import java.lang.ref.WeakReference
 import javax.inject.Inject
 
+
 abstract class BaseFragment<E : BaseViewModel> : Fragment(), HasAndroidInjector {
     @Inject
     internal lateinit var viewModel: E
