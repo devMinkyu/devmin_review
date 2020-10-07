@@ -6,7 +6,7 @@ import androidx.room.PrimaryKey
 import com.squareup.moshi.JsonClass
 import java.util.*
 
-@Entity
+@Entity(tableName = "rooms")
 @JsonClass(generateAdapter = true)
 data class Room(
     @PrimaryKey var id:Int = -1,
