@@ -1,5 +1,6 @@
 package com.devmin.android_review.ioc.component
 
+import com.devmin.android_review.ioc.module.injector.AppInjectorModule
 import com.devmin.android_review.presentation.app.App
 import dagger.Component
 import dagger.android.AndroidInjector
@@ -10,7 +11,7 @@ import javax.inject.Singleton
 @Component(
     modules = [
         AndroidSupportInjectionModule::class,
-//        AppInjectorModule::class
+        AppInjectorModule::class
     ]
 )
 interface AppComponent : AndroidInjector<App> {
