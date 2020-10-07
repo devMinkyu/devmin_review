@@ -4,6 +4,12 @@
     <data>
 
         <import type="android.view.View" />
+
+        <import type="com.devmin.android_review.entity.Room" />
+
+        <variable
+            name="room"
+            type="Room" />
     </data>
 
     <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
@@ -32,7 +38,6 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
-
                 <io.rmiri.skeleton.SkeletonView
                     android:id="@+id/skeletonViewPhoto"
                     android:layout_width="match_parent"
@@ -52,23 +57,47 @@
                 </io.rmiri.skeleton.SkeletonView>
 
                 <io.rmiri.skeleton.SkeletonView
-                    android:id="@+id/title"
+                    android:id="@+id/lastDate"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginTop="22dp"
+                    android:layout_marginTop="10dp"
                     android:layout_marginEnd="20dp"
                     app:SK_cornerRadius="10dp"
                     app:SK_padding="5dp"
                     app:SK_shapeType="rect"
-                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/skeletonViewPhoto">
+
+                    <com.github.curioustechizen.ago.RelativeTimeTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:maxLines="1"
+                        android:textColor="@color/hint_text"
+                        android:textSize="10sp"
+                        tools:ignore="SmallSp"
+                        tools:text="2019년 3월 12일" />
+                </io.rmiri.skeleton.SkeletonView>
+
+                <io.rmiri.skeleton.SkeletonView
+                    android:id="@+id/title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="12dp"
+                    app:layout_constraintTop_toBottomOf="@id/lastDate"
+                    app:SK_cornerRadius="10dp"
+                    app:SK_padding="5dp"
+                    app:SK_shapeType="rect"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_goneMarginTop="22dp">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:ellipsize="end"
                         android:maxLines="1"
+                        android:text="@{room.name}"
                         android:textColor="@color/main_text"
                         android:textSize="16sp"
                         tools:text="Title" />
@@ -92,6 +121,7 @@
                         android:layout_height="wrap_content"
                         android:drawableStart="@drawable/rate"
                         android:drawablePadding="4dp"
+                        android:text="@{@string/rate(room.rate)}"
                         android:textColor="@color/sub_main_text"
                         android:textSize="11sp"
                         tools:ignore="SmallSp"
@@ -126,6 +156,7 @@
                         android:layout_height="wrap_content"
                         android:textColor="@color/main_text"
                         android:textSize="14sp"
+                        android:text="@{@string/price(room.description.price)}"
                         tools:text="15000원" />
                 </io.rmiri.skeleton.SkeletonView>
 

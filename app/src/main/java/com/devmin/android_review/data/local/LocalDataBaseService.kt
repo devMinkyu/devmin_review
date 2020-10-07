@@ -4,13 +4,13 @@ import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverter
 import androidx.room.TypeConverters
-import com.devmin.android_review.entity.Favorite
+import com.devmin.android_review.entity.Room
 import java.util.*
 
 
 @Suppress("unused")
 @Database(
-    entities = [Favorite::class],
+    entities = [Room::class],
     version = 1,
     exportSchema = false
 )

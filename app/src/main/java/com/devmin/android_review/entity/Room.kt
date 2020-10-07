@@ -1,11 +1,17 @@
 package com.devmin.android_review.entity
 
+import androidx.room.Embedded
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import com.squareup.moshi.JsonClass
+import java.util.*
 
+@Entity
 @JsonClass(generateAdapter = true)
 data class Room(
-    var id:Int = -1,
+    @PrimaryKey var id:Int = -1,
     var name: String ="",
-    var description: Description? = null,
-    var rate: Double = 0.0
+    @Embedded var description: Description? = null,
+    var rate: Double = 0.0,
+    var lastUpdate: Date? = null,
 )
