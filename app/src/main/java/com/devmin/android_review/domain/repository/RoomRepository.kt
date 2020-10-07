@@ -13,11 +13,11 @@ import javax.inject.Singleton
 @Singleton
 interface RoomRepository {
     companion object {
-        private val refreshInstance: PublishSubject<Boolean> = PublishSubject.create()
+        private val refreshInstance: PublishSubject<Int> = PublishSubject.create()
         private val roomInstance: BehaviorSubject<Room> = BehaviorSubject.create()
     }
 
-    val refreshSubject: PublishSubject<Boolean>
+    val refreshSubject: PublishSubject<Int>
         get() = refreshInstance
     val roomSubject: BehaviorSubject<Room>
         get() = roomInstance

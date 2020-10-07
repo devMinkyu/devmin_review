@@ -40,7 +40,8 @@ class AllRoomAdapter(
         item?.let { room ->
             val favorite = when (viewModel) {
                 is AllRoomFragmentViewModel -> {
-                    ObservableBoolean(viewModel.favoriteSet.contains(room.id.toString()))
+                    viewModel.favoriteMap[room.id] = ObservableBoolean(viewModel.favoriteSet.contains(room.id.toString()))
+                    viewModel.favoriteMap[room.id]!!
                 }
                 is FavoriteRoomFragmentViewModel -> {
                     ObservableBoolean(true)

@@ -27,6 +27,7 @@ class AllRoomFragmentViewModel @Inject constructor() : BaseViewModel() {
     val isEmpty = ObservableBoolean(true)
 
     var favoriteSet = mutableSetOf<String>()
+    val favoriteMap = mutableMapOf<Int, ObservableBoolean>()
 
     private val roomLiveDataSource: MutableLiveData<PageKeyedDataSource<Int, Room>> =
         MutableLiveData<PageKeyedDataSource<Int, Room>>()
@@ -45,7 +46,19 @@ class AllRoomFragmentViewModel @Inject constructor() : BaseViewModel() {
         roomPagedList = LivePagedListBuilder(roomDataSourceFactory, pagedListConfig).build()
     }
 
-    private fun rxSubject() {}
+    private fun rxSubject() {
+        val disposable = roomRepository.refreshSubject
+            .subscribeOn(Schedulers.newThread())
+            .subscribe({
+                favoriteSet = pref.getStringSet(AndroidPrefUtilService.Key.FAVORITE_ID, setOf()).blockingGet().toMutableSet()
+                if(favoriteMap.containsKey(it)) {
+                    favoriteMap[it]!!.set(favoriteSet.contains(it.toString()))
+                }
+            }) {
+                Timber.e(it)
+            }
+        addDisposable(disposable)
+    }
 
     fun refresh() {
         isEmpty.set(true)

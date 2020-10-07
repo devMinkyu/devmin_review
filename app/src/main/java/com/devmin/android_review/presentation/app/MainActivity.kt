@@ -30,8 +30,10 @@ class MainActivity : BaseActivity<MainActivityViewModel>() {
     }
 
     private fun settingView() {
-        roomPager.adapter = ReviewPagerAdapter(supportFragmentManager)
-        pagerTab.setupWithViewPager(roomPager)
+        if(roomPager.adapter == null) {
+            roomPager.adapter = ReviewPagerAdapter(supportFragmentManager)
+            pagerTab.setupWithViewPager(roomPager)
+        }
     }
 
     private fun handleIntent(intent: Intent) {
@@ -64,6 +66,7 @@ class MainActivity : BaseActivity<MainActivityViewModel>() {
                 else -> AllRoomFragment()
             }
         }
+
         override fun getPageTitle(position: Int): CharSequence {
             return when (position) {
                 1 -> resources.getString(R.string.mainRoom)

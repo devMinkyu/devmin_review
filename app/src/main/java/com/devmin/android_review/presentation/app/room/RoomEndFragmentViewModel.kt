@@ -53,6 +53,7 @@ class RoomEndFragmentViewModel @Inject constructor() : BaseViewModel() {
     private fun create(room: Room) {
         favoriteSet.add("${room.id}")
         pref.putStringSet(AndroidPrefUtilService.Key.FAVORITE_ID, favoriteSet).blockingAwait()
+        roomRepository.refreshSubject.onNext(room.id)
         val disposable = roomRepository.create(room, true).subscribeOn(Schedulers.newThread())
             .subscribe()
         addDisposable(disposable)
@@ -61,6 +62,7 @@ class RoomEndFragmentViewModel @Inject constructor() : BaseViewModel() {
     private fun delete(room: Room) {
         favoriteSet.remove("${room.id}")
         pref.putStringSet(AndroidPrefUtilService.Key.FAVORITE_ID, favoriteSet).blockingAwait()
+        roomRepository.refreshSubject.onNext(room.id)
         val disposable = roomRepository.delete(room, true)
             .subscribeOn(Schedulers.newThread())
             .subscribe()
