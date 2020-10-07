@@ -5,9 +5,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.devmin.android_review.R
 import com.devmin.android_review.databinding.FragmentFavoriteReviewBinding
 import com.devmin.android_review.presentation.app.common.BaseFragment
+import kotlinx.android.synthetic.main.fragment_favorite_review.*
 
 class FavoriteReviewFragment : BaseFragment<FavoriteReviewFragmentViewModel>() {
     private lateinit var binding: FragmentFavoriteReviewBinding
@@ -24,6 +26,7 @@ class FavoriteReviewFragment : BaseFragment<FavoriteReviewFragmentViewModel>() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        favoriteReviewList?.layoutManager = LinearLayoutManager(context)
     }
 
     inner class ViewHandler {
