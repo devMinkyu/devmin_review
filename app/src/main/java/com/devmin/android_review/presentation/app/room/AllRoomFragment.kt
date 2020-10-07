@@ -5,14 +5,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.devmin.android_review.R
 import com.devmin.android_review.databinding.FragmentAllRoomBinding
+import com.devmin.android_review.entity.Room
 import com.devmin.android_review.presentation.app.common.BaseFragment
 import com.devmin.android_review.presentation.app.room.adapter.AllRoomAdapter
 import kotlinx.android.synthetic.main.fragment_all_room.*
 
-class AllRoomFragment : BaseFragment<AllRoomFragmentViewModel>() {
+class AllRoomFragment : BaseFragment<AllRoomFragmentViewModel>(), RoomFavoriteViewHandler {
     private lateinit var binding: FragmentAllRoomBinding
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -29,16 +31,29 @@ class AllRoomFragment : BaseFragment<AllRoomFragmentViewModel>() {
         super.onViewCreated(view, savedInstanceState)
         allRoomList?.layoutManager = LinearLayoutManager(context)
         allRoomList.setItemViewCacheSize(20)
-        val adapter = AllRoomAdapter(requireContext(), getViewModel())
-        getViewModel().roomPagedList?.observe(this.viewLifecycleOwner, {
-            adapter.submitList(it)
-        })
+        val adapter = AllRoomAdapter(requireContext(), getViewModel(), this)
+        getViewModel().roomPagedList?.observe(
+            this.viewLifecycleOwner,
+            Observer(adapter::submitList)
+        )
         allRoomList?.adapter = adapter
+    }
+
+    override fun roomEnd(room: Room) {
+        getViewModel().end(room)
+    }
+
+    override fun like(room: Room) {
+        getViewModel().create(room)
+    }
+
+    override fun unlike(room: Room) {
+        getViewModel().delete(room)
     }
 
     inner class ViewHandler {
         fun goToTop() {
-            roomContainer?.scrollTo(0,0)
+            roomContainer?.scrollTo(0, 0)
         }
     }
 }

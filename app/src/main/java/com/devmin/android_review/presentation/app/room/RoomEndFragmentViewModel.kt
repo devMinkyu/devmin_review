@@ -5,8 +5,5 @@ import javax.inject.Inject
 
 class RoomEndFragmentViewModel @Inject constructor() : BaseViewModel() {
 
-    override fun initialize() {
-        super.initialize()
-    }
 }
 

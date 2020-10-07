@@ -7,9 +7,19 @@
 
         <import type="com.devmin.android_review.entity.Room" />
 
+        <import type="com.devmin.android_review.presentation.app.room.RoomFavoriteViewHandler" />
+
+        <variable
+            name="viewHandler"
+            type="RoomFavoriteViewHandler" />
+
         <variable
             name="room"
             type="Room" />
+
+        <variable
+            name="favorite"
+            type="androidx.databinding.ObservableBoolean" />
     </data>
 
     <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
@@ -70,6 +80,7 @@
                     app:layout_constraintTop_toBottomOf="@id/skeletonViewPhoto">
 
                     <com.github.curioustechizen.ago.RelativeTimeTextView
+                        android:id="@+id/lastUpdate"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:ellipsize="end"
@@ -129,16 +140,6 @@
                         tools:text="9.5" />
                 </io.rmiri.skeleton.SkeletonView>
 
-                <androidx.appcompat.widget.AppCompatImageView
-                    android:id="@+id/like"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginTop="10dp"
-                    android:src="@drawable/icon_like_off"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/rate" />
-
                 <io.rmiri.skeleton.SkeletonView
                     android:id="@+id/price"
                     android:layout_width="100dp"
@@ -162,9 +163,32 @@
                 </io.rmiri.skeleton.SkeletonView>
 
                 <Space
+                    android:id="@+id/cardBgl"
                     android:layout_width="match_parent"
                     android:layout_height="20dp"
                     app:layout_constraintTop_toBottomOf="@id/like" />
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:background="?attr/selectableItemBackground"
+                    android:onClick="@{() -> viewHandler.roomEnd(room)}"
+                    app:layout_constraintBottom_toBottomOf="@id/cardBgl"
+                    app:layout_constraintEnd_toEndOf="@id/skeletonViewPhoto"
+                    app:layout_constraintStart_toStartOf="@id/skeletonViewPhoto"
+                    app:layout_constraintTop_toTopOf="@id/skeletonViewPhoto" />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/like"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:background="?attr/selectableItemBackground"
+                    android:padding="10dp"
+                    android:src="@{favorite ? @drawable/icon_like_on:@drawable/icon_like_off}"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/rate"
+                    tools:src="@drawable/icon_like_on" />
             </androidx.constraintlayout.widget.ConstraintLayout>
         </io.rmiri.skeleton.SkeletonViewGroup>
     </androidx.cardview.widget.CardView>

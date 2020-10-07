@@ -42,6 +42,10 @@ class AndroidPrefUtilService @Inject constructor() {
         return Single.just(sp.getString(key.name, defaultVal)!!)
     }
 
+    fun getStringSet(key: Key, defaultVal: Set<String>): Single<Set<String>> {
+        return Single.just(sp.getStringSet(key.name, defaultVal)!!)
+    }
+
     fun getBool(key: Key): Single<Boolean> {
         return getBool(key, false)
     }
@@ -67,6 +71,10 @@ class AndroidPrefUtilService @Inject constructor() {
         return Completable.fromAction { sp.edit().putString(key.name, value).apply() }
     }
 
+    fun putStringSet(key: Key, value: Set<String>): Completable {
+        return Completable.fromAction { sp.edit().putStringSet(key.name, value).apply() }
+    }
+
     fun putBool(key: Key, value: Boolean): Completable {
         return Completable.fromAction { sp.edit().putBoolean(key.name, value).apply() }
     }
@@ -79,5 +87,7 @@ class AndroidPrefUtilService @Inject constructor() {
         return Completable.fromAction { sp.edit().putLong(key.name, value).apply() }
     }
 
-    enum class Key {}
+    enum class Key {
+        FAVORITE_ID
+    }
 }

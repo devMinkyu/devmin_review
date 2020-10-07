@@ -7,6 +7,7 @@ import androidx.paging.DataSource
 import androidx.paging.LivePagedListBuilder
 import androidx.paging.PageKeyedDataSource
 import androidx.paging.PagedList
+import com.devmin.android_review.data.local.AndroidPrefUtilService
 import com.devmin.android_review.domain.repository.RoomRepository
 import com.devmin.android_review.entity.Room
 import com.devmin.android_review.presentation.app.common.BaseViewModel
@@ -18,12 +19,17 @@ class AllRoomFragmentViewModel @Inject constructor() : BaseViewModel() {
     @Inject
     lateinit var roomRepository: RoomRepository
 
+    @Inject
+    lateinit var pref: AndroidPrefUtilService
+
     companion object {
         private var PAGE_KEY: Int = 1
     }
 
     val error = ObservableBoolean(false)
-    val isTop = ObservableBoolean(false)
+    val isEmpty = ObservableBoolean(true)
+
+    var favoriteSet = mutableSetOf<String>()
 
     private val roomLiveDataSource: MutableLiveData<PageKeyedDataSource<Int, Room>> =
         MutableLiveData<PageKeyedDataSource<Int, Room>>()
@@ -33,6 +39,7 @@ class AllRoomFragmentViewModel @Inject constructor() : BaseViewModel() {
     override fun initialize() {
         super.initialize()
         rxSubject()
+        favoriteSet = pref.getStringSet(AndroidPrefUtilService.Key.FAVORITE_ID, setOf()).blockingGet().toMutableSet()
         val pagedListConfig =
             PagedList.Config.Builder().setEnablePlaceholders(false).setPageSize(20).build()
 
@@ -47,6 +54,29 @@ class AllRoomFragmentViewModel @Inject constructor() : BaseViewModel() {
         roomDataSourceFactory.refresh()
     }
 
+    fun create(room: Room) {
+        favoriteSet = pref.getStringSet(AndroidPrefUtilService.Key.FAVORITE_ID, setOf()).blockingGet().toMutableSet()
+        favoriteSet.add("${room.id}")
+        pref.putStringSet(AndroidPrefUtilService.Key.FAVORITE_ID, favoriteSet).blockingAwait()
+        val disposable = roomRepository.create(room, true).subscribeOn(Schedulers.newThread())
+            .subscribe()
+        addDisposable(disposable)
+    }
+
+    fun delete(room: Room) {
+        favoriteSet = pref.getStringSet(AndroidPrefUtilService.Key.FAVORITE_ID, setOf()).blockingGet().toMutableSet()
+        favoriteSet.remove("${room.id}")
+        pref.putStringSet(AndroidPrefUtilService.Key.FAVORITE_ID, favoriteSet).blockingAwait()
+        val disposable = roomRepository.delete(room, true)
+            .subscribeOn(Schedulers.newThread())
+            .subscribe()
+        addDisposable(disposable)
+    }
+
+    fun end(room: Room) {
+        roomRepository.roomSubject.onNext(room)
+    }
+
     inner class RoomDataSourceFactory : DataSource.Factory<Int, Room>() {
         private lateinit var gameDataSource: RoomDataSource
         override fun create(): DataSource<Int, Room> {
@@ -55,6 +85,7 @@ class AllRoomFragmentViewModel @Inject constructor() : BaseViewModel() {
             roomLiveDataSource.postValue(gameDataSource)
             return gameDataSource
         }
+
         fun refresh() {
             PAGE_KEY = 1
             gameDataSource.invalidate()
@@ -72,7 +103,7 @@ class AllRoomFragmentViewModel @Inject constructor() : BaseViewModel() {
                 roomRepository.read(PAGE_KEY)
                     .observeOn(Schedulers.newThread())
                     .subscribe({
-                        isTop.set(it.isNotEmpty())
+                        isEmpty.set(it.isEmpty())
                         it?.let { list ->
                             PAGE_KEY += 1
                             callback.onResult(list, null, PAGE_KEY)
