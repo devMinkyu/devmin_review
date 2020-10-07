@@ -4,8 +4,8 @@
 
     <data>
         <import type="android.view.View"/>
-        <import type="com.devmin.android_review.presentation.app.main.module.AllReviewFragment.ViewHandler" />
-        <import type="com.devmin.android_review.presentation.app.main.module.AllReviewFragmentViewModel" />
+        <import type="com.devmin.android_review.presentation.app.review.AllReviewFragment.ViewHandler" />
+        <import type="com.devmin.android_review.presentation.app.review.AllReviewFragmentViewModel" />
 
         <variable
             name="viewModel"

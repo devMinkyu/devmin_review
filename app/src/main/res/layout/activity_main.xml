@@ -1,9 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/pagerTab"
+        android:layout_width="wrap_content"
+        android:layout_height="35dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="12.5dp"
+        app:autoSizeTextType="uniform"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:tabGravity="center"
+        app:tabIndicatorColor="@android:color/black"
+        app:tabIndicatorFullWidth="false"
+        app:tabIndicatorHeight="3dp"
+        app:tabPadding="0dp"
+        app:tabSelectedTextColor="@android:color/black"
+        app:tabTextAppearance="@style/AppTheme.Tab"
+        app:tabTextColor="@color/hint_text"
+        app:tabUnboundedRipple="true" />
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/reviewPager"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/pagerTab"
+        />
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/contentFrame"
         android:layout_width="match_parent"

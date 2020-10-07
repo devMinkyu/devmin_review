@@ -3,9 +3,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
-        <import type="android.view.View"/>
-        <import type="com.devmin.android_review.presentation.app.main.module.FavoriteReviewFragment.ViewHandler" />
-        <import type="com.devmin.android_review.presentation.app.main.module.FavoriteReviewFragmentViewModel" />
+
+        <import type="android.view.View" />
+
+        <import type="com.devmin.android_review.presentation.app.review.FavoriteReviewFragment.ViewHandler" />
+
+        <import type="com.devmin.android_review.presentation.app.review.FavoriteReviewFragmentViewModel" />
 
         <variable
             name="viewModel"
