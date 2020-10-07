@@ -1,9 +1,10 @@
-package com.devmin.android_review.data.local
+package com.devmin.android_review.common
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverter
 import androidx.room.TypeConverters
+import com.devmin.android_review.data.local.FavoritesDao
 import com.devmin.android_review.entity.Room
 import java.util.*
 

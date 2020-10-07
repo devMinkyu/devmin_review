@@ -7,7 +7,7 @@ import android.content.SharedPreferences
 import android.content.res.Resources
 import androidx.preference.PreferenceManager
 import androidx.room.Room
-import com.devmin.android_review.data.local.AppDatabase
+import com.devmin.android_review.common.AppDatabase
 import com.devmin.android_review.presentation.app.App
 import dagger.Module
 import dagger.Provides

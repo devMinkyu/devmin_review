@@ -1,6 +1,6 @@
 package com.devmin.android_review.ioc.module.provider
 
-import com.devmin.android_review.data.http.Api
+import com.devmin.android_review.common.Api
 import com.facebook.stetho.okhttp3.StethoInterceptor
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.adapters.Rfc3339DateJsonAdapter

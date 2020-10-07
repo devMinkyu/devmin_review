@@ -27,11 +27,6 @@ class FavoriteRoomFragmentViewModel @Inject constructor() : BaseViewModel() {
         loadFavoritePaged()
     }
     private fun rxSubject() {}
-
-    private fun refresh() {
-        favoritePagedLiveData.value?.dataSource?.invalidate()
-    }
-
     private fun loadFavoritePaged() {
         val factory = roomRepository.favoriteRead(Sort.DESC, Filter.RATE)
         val pagedListBuilder = LivePagedListBuilder(

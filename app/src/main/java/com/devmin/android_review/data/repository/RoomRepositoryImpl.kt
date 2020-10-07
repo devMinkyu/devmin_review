@@ -1,8 +1,9 @@
 package com.devmin.android_review.data.repository
 
 import androidx.paging.DataSource
-import com.devmin.android_review.data.http.Api
-import com.devmin.android_review.data.local.AppDatabase
+import com.devmin.android_review.common.Api
+import com.devmin.android_review.common.AppDatabase
+import com.devmin.android_review.data.http.RoomApi
 import com.devmin.android_review.domain.repository.RoomRepository
 import com.devmin.android_review.entity.Filter
 import com.devmin.android_review.entity.Room
@@ -18,18 +19,13 @@ class RoomRepositoryImpl  @Inject constructor() : RoomRepository {
     @Inject
     lateinit var db: AppDatabase
     @Inject
-    lateinit var api:Api
+    lateinit var api: RoomApi
 
     override fun read(key: Int): Single<List<Room>> {
-        return api.getRead("${key}.json").flatMap {
-            if(it.isSuccessful) {
-                it.body()?.data?.product?.let { list ->
-                    Single.just(list)
-                }?:Single.just(listOf())
-            } else {
-                // todo local 처리 하든 이슈 처리
-                Single.error(Throwable("인터넷 에러"))
-            }
+        return api.read(key).flatMap {
+            it.data?.product?.let { list ->
+                Single.just(list)
+            }?:Single.just(listOf())
         }
     }
 
