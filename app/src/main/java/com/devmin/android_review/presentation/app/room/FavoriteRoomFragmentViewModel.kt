@@ -42,6 +42,7 @@ class FavoriteRoomFragmentViewModel @Inject constructor() : BaseViewModel() {
             20
         )
         favoritePagedLiveData = pagedListBuilder.build()
+        isEmpty.set(favoritePagedLiveData.value?.isEmpty() ?: true)
     }
 
     fun delete(room: Room) {

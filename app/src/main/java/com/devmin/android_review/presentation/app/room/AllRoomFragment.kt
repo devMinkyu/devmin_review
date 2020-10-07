@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.devmin.android_review.R
 import com.devmin.android_review.databinding.FragmentAllRoomBinding
@@ -32,11 +31,15 @@ class AllRoomFragment : BaseFragment<AllRoomFragmentViewModel>(), RoomFavoriteVi
         allRoomList?.layoutManager = LinearLayoutManager(context)
         allRoomList.setItemViewCacheSize(20)
         val adapter = AllRoomAdapter(requireContext(), getViewModel(), this)
-        getViewModel().roomPagedList?.observe(
-            this.viewLifecycleOwner,
-            Observer(adapter::submitList)
-        )
+        getViewModel().roomPagedList?.observe(this.viewLifecycleOwner, {
+            adapter.submitList(it)
+            pullToRefresh?.isRefreshing = false
+        })
         allRoomList?.adapter = adapter
+
+        pullToRefresh?.setOnRefreshListener {
+            getViewModel().refresh()
+        }
     }
 
     override fun roomEnd(room: Room) {
