@@ -6,13 +6,13 @@
 
         <import type="android.view.View" />
 
-        <import type="com.devmin.android_review.presentation.app.review.FavoriteReviewFragment.ViewHandler" />
+        <import type="com.devmin.android_review.presentation.app.room.FavoriteRoomFragment.ViewHandler" />
 
-        <import type="com.devmin.android_review.presentation.app.review.FavoriteReviewFragmentViewModel" />
+        <import type="com.devmin.android_review.presentation.app.room.FavoriteRoomFragmentViewModel" />
 
         <variable
             name="viewModel"
-            type="FavoriteReviewFragmentViewModel" />
+            type="FavoriteRoomFragmentViewModel" />
 
         <variable
             name="viewHandler"

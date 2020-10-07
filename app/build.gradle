@@ -101,6 +101,7 @@ dependencies {
     kapt 'com.squareup.moshi:moshi-kotlin-codegen:1.9.3'
 
     implementation 'com.github.curioustechizen.android-ago:library:1.4.0'
+    implementation 'com.github.rasoulmiri:Skeleton:v1.1.4'
 
     implementation 'com.jakewharton.timber:timber:4.7.1'
     implementation 'com.facebook.stetho:stetho:1.5.1'

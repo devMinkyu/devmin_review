@@ -2,8 +2,8 @@
 
 package com.devmin.android_review.ioc.module.provider
 
-import com.devmin.android_review.data.repository.ReviewRepositoryImpl
-import com.devmin.android_review.domain.repository.ReviewRepository
+import com.devmin.android_review.data.repository.RoomRepositoryImpl
+import com.devmin.android_review.domain.repository.RoomRepository
 import dagger.Binds
 import dagger.Module
 import javax.inject.Singleton
@@ -12,7 +12,7 @@ import javax.inject.Singleton
 abstract class AppBinderModule {
     @Singleton
     @Binds
-    abstract fun bindReviewRepository(
-        reviewRepositoryImpl: ReviewRepositoryImpl
-    ): ReviewRepository
+    abstract fun bindRoomRepository(
+        roomRepositoryImpl: RoomRepositoryImpl
+    ): RoomRepository
 }

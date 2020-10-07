@@ -4,12 +4,12 @@
 
     <data>
         <import type="android.view.View"/>
-        <import type="com.devmin.android_review.presentation.app.review.AllReviewFragment.ViewHandler" />
-        <import type="com.devmin.android_review.presentation.app.review.AllReviewFragmentViewModel" />
+        <import type="com.devmin.android_review.presentation.app.room.AllRoomFragment.ViewHandler" />
+        <import type="com.devmin.android_review.presentation.app.room.AllRoomFragmentViewModel" />
 
         <variable
             name="viewModel"
-            type="AllReviewFragmentViewModel" />
+            type="AllRoomFragmentViewModel" />
 
         <variable
             name="viewHandler"

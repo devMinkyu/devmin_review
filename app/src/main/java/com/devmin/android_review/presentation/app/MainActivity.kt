@@ -6,9 +6,9 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import com.devmin.android_review.R
 import com.devmin.android_review.presentation.app.common.BaseActivity
-import com.devmin.android_review.presentation.app.review.AllReviewFragment
-import com.devmin.android_review.presentation.app.review.FavoriteReviewFragment
-import kotlinx.android.synthetic.main.fragment_main.*
+import com.devmin.android_review.presentation.app.room.AllRoomFragment
+import com.devmin.android_review.presentation.app.room.FavoriteRoomFragment
+import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : BaseActivity<MainActivityViewModel>() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -17,8 +17,8 @@ class MainActivity : BaseActivity<MainActivityViewModel>() {
         settingView()
     }
     private fun settingView() {
-        reviewPager.adapter = ReviewPagerAdapter(supportFragmentManager)
-        pagerTab.setupWithViewPager(reviewPager)
+        roomPager.adapter = ReviewPagerAdapter(supportFragmentManager)
+        pagerTab.setupWithViewPager(roomPager)
     }
     private fun showReviewEnd() {
 //        supportFragmentManager.beginTransaction()
@@ -30,14 +30,14 @@ class MainActivity : BaseActivity<MainActivityViewModel>() {
         override fun getCount(): Int  = 2
         override fun getItem(i: Int): Fragment {
             return when (i) {
-                1 -> FavoriteReviewFragment()
-                else -> AllReviewFragment()
+                1 -> FavoriteRoomFragment()
+                else -> AllRoomFragment()
             }
         }
         override fun getPageTitle(position: Int): CharSequence {
             return when (position) {
-                1 -> resources.getString(R.string.mainReview)
-                else -> resources.getString(R.string.favoriteReview)
+                1 -> resources.getString(R.string.mainRoom)
+                else -> resources.getString(R.string.favoriteRoom)
             }
         }
     }

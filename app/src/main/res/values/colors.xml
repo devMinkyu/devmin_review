@@ -4,6 +4,9 @@
     <color name="colorPrimaryDark">#3700B3</color>
     <color name="colorAccent">#03DAC5</color>
 
+    <color name="list_loading">#DEDEDE</color>
+
     <color name="hint_text">#d8d8d8</color>
+    <color name="sub_main_text">#525252</color>
     <color name="main_text">#212121</color>
 </resources>

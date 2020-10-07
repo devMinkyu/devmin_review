@@ -1,5 +1,9 @@
 <resources>
     <string name="app_name">android_review</string>
-    <string name="mainReview">전체</string>
-    <string name="favoriteReview">즐겨찾기</string>
+    <string name="mainRoom">전체</string>
+    <string name="favoriteRoom">즐겨찾기</string>
+
+    <string name="rate">%d</string>
+    <string name="price">%d원</string>
+
 </resources>
