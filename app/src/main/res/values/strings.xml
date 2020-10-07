@@ -3,7 +3,8 @@
     <string name="mainRoom">전체</string>
     <string name="favoriteRoom">즐겨찾기</string>
 
-    <string name="rate">%d</string>
+    <string name="rate">%1.1f</string>
     <string name="price">%d원</string>
+    <string name="go_to_top">위로 가기</string>
 
 </resources>

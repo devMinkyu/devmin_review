@@ -17,6 +17,10 @@ import com.devmin.android_review.presentation.app.common.BaseViewModel
 import com.devmin.android_review.presentation.extension.listAnimation
 import com.devmin.android_review.presentation.extension.makeGone
 import kotlinx.android.synthetic.main.item_room.view.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 class AllRoomAdapter(
     val context: Context,
@@ -31,6 +35,11 @@ class AllRoomAdapter(
         item?.let { room ->
             holder.binding?.room = room
             holder.itemView.lastDate?.makeGone()
+
+            CoroutineScope(Dispatchers.IO).launch {
+                delay(800)
+                holder.itemView.skeletonGroup?.finishAnimation()
+            }
 
             if (TextUtils.isEmpty(room.thumbnail).not()) {
                 holder.itemView.thumbnail?.let { appCompatImageView ->

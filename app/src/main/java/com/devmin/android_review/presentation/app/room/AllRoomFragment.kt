@@ -28,6 +28,7 @@ class AllRoomFragment : BaseFragment<AllRoomFragmentViewModel>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         allRoomList?.layoutManager = LinearLayoutManager(context)
+        allRoomList.setItemViewCacheSize(20)
         val adapter = AllRoomAdapter(requireContext(), getViewModel())
         getViewModel().roomPagedList?.observe(this.viewLifecycleOwner, {
             adapter.submitList(it)
@@ -35,5 +36,9 @@ class AllRoomFragment : BaseFragment<AllRoomFragmentViewModel>() {
         allRoomList?.adapter = adapter
     }
 
-    inner class ViewHandler
+    inner class ViewHandler {
+        fun goToTop() {
+            roomContainer?.scrollTo(0,0)
+        }
+    }
 }

@@ -1,5 +1,6 @@
 package com.devmin.android_review.presentation.app.room
 
+import androidx.databinding.ObservableBoolean
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.paging.DataSource
@@ -21,6 +22,9 @@ class AllRoomFragmentViewModel @Inject constructor() : BaseViewModel() {
         private var PAGE_KEY: Int = 1
     }
 
+    val error = ObservableBoolean(false)
+    val isTop = ObservableBoolean(false)
+
     private val roomLiveDataSource: MutableLiveData<PageKeyedDataSource<Int, Room>> =
         MutableLiveData<PageKeyedDataSource<Int, Room>>()
 
@@ -38,6 +42,10 @@ class AllRoomFragmentViewModel @Inject constructor() : BaseViewModel() {
     }
 
     private fun rxSubject() {}
+
+    fun refresh() {
+        roomDataSourceFactory.refresh()
+    }
 
     inner class RoomDataSourceFactory : DataSource.Factory<Int, Room>() {
         private lateinit var gameDataSource: RoomDataSource
@@ -59,10 +67,12 @@ class AllRoomFragmentViewModel @Inject constructor() : BaseViewModel() {
             params: LoadInitialParams<Int>,
             callback: LoadInitialCallback<Int, Room>
         ) {
+            PAGE_KEY = 1
             val disposable =
                 roomRepository.read(PAGE_KEY)
                     .observeOn(Schedulers.newThread())
                     .subscribe({
+                        isTop.set(it.isNotEmpty())
                         it?.let { list ->
                             PAGE_KEY += 1
                             callback.onResult(list, null, PAGE_KEY)

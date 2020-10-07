@@ -4,7 +4,8 @@
     <data>
 
         <import type="android.view.View" />
-        <import type="com.devmin.android_review.entity.Room"/>
+
+        <import type="com.devmin.android_review.entity.Room" />
 
         <variable
             name="room"
@@ -17,7 +18,7 @@
         android:layout_height="wrap_content"
         app:cardBackgroundColor="@android:color/white"
         app:cardCornerRadius="10dp"
-        app:cardElevation="10dp"
+        app:cardElevation="8dp"
         app:cardUseCompatPadding="true"
         app:contentPadding="0dp">
 
@@ -28,7 +29,6 @@
             app:SK_BackgroundViewsColor="#EEEEEE"
             app:SK_animationAutoStart="true"
             app:SK_animationDirection="LTR"
-            app:SK_animationDuration="1000"
             app:SK_animationFinishType="gradient"
             app:SK_animationNormalType="gradient"
             app:SK_backgroundMainColor="@android:color/transparent"
@@ -37,6 +37,7 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
+
                 <io.rmiri.skeleton.SkeletonView
                     android:id="@+id/skeletonViewPhoto"
                     android:layout_width="match_parent"
@@ -63,8 +64,8 @@
                     android:layout_marginTop="10dp"
                     android:layout_marginEnd="20dp"
                     app:SK_cornerRadius="10dp"
-                    app:SK_padding="5dp"
                     app:SK_shapeType="rect"
+                    app:SK_textLineHeight="20dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/skeletonViewPhoto">
 
@@ -81,19 +82,20 @@
 
                 <io.rmiri.skeleton.SkeletonView
                     android:id="@+id/title"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="20dp"
-                    android:layout_marginTop="12dp"
-                    app:layout_goneMarginTop="22dp"
-                    app:SK_cornerRadius="10dp"
-                    app:SK_padding="5dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="20dp"
+                    app:SK_cornerRadius="6dp"
                     app:SK_shapeType="rect"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/lastDate">
+                    app:layout_constraintTop_toBottomOf="@id/lastDate"
+                    app:layout_goneMarginTop="22dp">
 
                     <TextView
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:ellipsize="end"
                         android:maxLines="1"
@@ -105,13 +107,12 @@
 
                 <io.rmiri.skeleton.SkeletonView
                     android:id="@+id/rate"
-                    android:layout_width="wrap_content"
+                    android:layout_width="80dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="20dp"
-                    android:layout_marginTop="8dp"
+                    android:layout_marginTop="5dp"
                     android:layout_marginEnd="20dp"
-                    app:SK_cornerRadius="10dp"
-                    app:SK_padding="5dp"
+                    app:SK_cornerRadius="6dp"
                     app:SK_shapeType="rect"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/title">
@@ -140,23 +141,23 @@
 
                 <io.rmiri.skeleton.SkeletonView
                     android:id="@+id/price"
-                    android:layout_width="wrap_content"
+                    android:layout_width="100dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="20dp"
                     android:layout_marginEnd="20dp"
-                    app:SK_cornerRadius="10dp"
-                    app:SK_padding="5dp"
+                    app:SK_cornerRadius="6dp"
                     app:SK_shapeType="rect"
                     app:layout_constraintBottom_toBottomOf="@id/like"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="@id/like">
 
                     <androidx.appcompat.widget.AppCompatTextView
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:text="@{@string/price(room.description.price)}"
+                        android:gravity="end"
                         android:textColor="@color/main_text"
                         android:textSize="14sp"
-                        android:text="@{@string/price(room.description.price)}"
                         tools:text="15000원" />
                 </io.rmiri.skeleton.SkeletonView>
 
