@@ -29,11 +29,10 @@ class AllRoomFragmentViewModel @Inject constructor() : BaseViewModel() {
     override fun initialize() {
         super.initialize()
         rxSubject()
-
-        roomDataSourceFactory = RoomDataSourceFactory()
-
         val pagedListConfig =
             PagedList.Config.Builder().setEnablePlaceholders(false).setPageSize(20).build()
+
+        roomDataSourceFactory = RoomDataSourceFactory()
 
         roomPagedList = LivePagedListBuilder(roomDataSourceFactory, pagedListConfig).build()
     }
@@ -48,7 +47,6 @@ class AllRoomFragmentViewModel @Inject constructor() : BaseViewModel() {
             roomLiveDataSource.postValue(gameDataSource)
             return gameDataSource
         }
-
         fun refresh() {
             PAGE_KEY = 1
             gameDataSource.invalidate()
@@ -87,7 +85,6 @@ class AllRoomFragmentViewModel @Inject constructor() : BaseViewModel() {
                                 PAGE_KEY -= 1
                                 PAGE_KEY
                             }
-
                             callback.onResult(list, adjacentKey)
                         }
 

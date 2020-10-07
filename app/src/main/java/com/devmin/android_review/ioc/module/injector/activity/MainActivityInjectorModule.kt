@@ -4,6 +4,7 @@ package com.devmin.android_review.ioc.module.injector.activity
 
 import com.devmin.android_review.presentation.app.room.AllRoomFragment
 import com.devmin.android_review.presentation.app.room.FavoriteRoomFragment
+import com.devmin.android_review.presentation.app.room.RoomEndFragment
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 
@@ -14,4 +15,7 @@ interface MainActivityInjectorModule {
 
     @ContributesAndroidInjector
     fun favoriteReviewFragment(): FavoriteRoomFragment
+
+    @ContributesAndroidInjector
+    fun roomEndFragment(): RoomEndFragment
 }
