@@ -23,10 +23,12 @@ class RoomRepositoryImpl  @Inject constructor() : RoomRepository {
     override fun read(key: Int): Single<List<Room>> {
         return api.getRead("${key}.json").flatMap {
             if(it.isSuccessful) {
-                Single.just(it.body()?.data?.product)
+                it.body()?.data?.product?.let { list ->
+                    Single.just(list)
+                }?:Single.just(listOf())
             } else {
                 // todo local 처리 하든 이슈 처리
-                Single.just(null)
+                Single.error(Throwable("인터넷 에러"))
             }
         }
     }

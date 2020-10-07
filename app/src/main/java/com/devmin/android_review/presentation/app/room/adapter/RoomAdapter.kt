@@ -49,6 +49,7 @@ class AllRoomAdapter(
             }
             holder.binding?.room = room
             holder.binding?.favorite = favorite
+            holder.binding?.viewHandler = viewHandler
 
             room.lastUpdate?.let {
                 holder.itemView.lastUpdate?.setReferenceTime(it.time)

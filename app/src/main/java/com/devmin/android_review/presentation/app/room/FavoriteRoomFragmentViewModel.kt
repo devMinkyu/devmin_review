@@ -17,9 +17,6 @@ class FavoriteRoomFragmentViewModel @Inject constructor() : BaseViewModel() {
     @Inject
     lateinit var roomRepository: RoomRepository
 
-    @Inject
-    lateinit var pref: AndroidPrefUtilService
-
     lateinit var favoritePagedLiveData: LiveData<PagedList<Room>>
 
     val isEmpty = ObservableBoolean(true)

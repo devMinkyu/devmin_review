@@ -1,5 +1,7 @@
 package com.devmin.android_review.presentation.extension
 
+import android.content.Intent
+import android.net.Uri
 import android.view.View
 import android.view.animation.AlphaAnimation
 import android.view.animation.Animation
@@ -9,6 +11,7 @@ import androidx.annotation.IdRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
+import com.devmin.android_review.BuildConfig
 import com.devmin.android_review.R
 import com.devmin.android_review.presentation.app.common.BaseFragment
 
@@ -41,6 +44,15 @@ fun Fragment.transactionFragment(frag: BaseFragment<*>, @IdRes id: Int) {
             .replace(id, frag, null)
             .commitNow()
     }
+}
+
+fun Fragment.baseIntent(uri:String) {
+    val intent = Intent(
+        Intent.ACTION_VIEW,
+        Uri.parse(uri)
+    )
+    intent.setPackage(BuildConfig.APPLICATION_ID)
+    startActivity(intent)
 }
 
 fun View.listAnimation() {

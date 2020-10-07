@@ -19,9 +19,6 @@ class AllRoomFragmentViewModel @Inject constructor() : BaseViewModel() {
     @Inject
     lateinit var roomRepository: RoomRepository
 
-    @Inject
-    lateinit var pref: AndroidPrefUtilService
-
     companion object {
         private var PAGE_KEY: Int = 1
     }
@@ -46,12 +43,12 @@ class AllRoomFragmentViewModel @Inject constructor() : BaseViewModel() {
         roomDataSourceFactory = RoomDataSourceFactory()
 
         roomPagedList = LivePagedListBuilder(roomDataSourceFactory, pagedListConfig).build()
-        isEmpty.set(roomPagedList?.value?.isEmpty()?:true)
     }
 
     private fun rxSubject() {}
 
     fun refresh() {
+        isEmpty.set(true)
         roomDataSourceFactory.refresh()
     }
 
@@ -104,6 +101,7 @@ class AllRoomFragmentViewModel @Inject constructor() : BaseViewModel() {
                 roomRepository.read(PAGE_KEY)
                     .observeOn(Schedulers.newThread())
                     .subscribe({
+                        isEmpty.set(it.isEmpty())
                         it?.let { list ->
                             PAGE_KEY += 1
                             callback.onResult(list, null, PAGE_KEY)

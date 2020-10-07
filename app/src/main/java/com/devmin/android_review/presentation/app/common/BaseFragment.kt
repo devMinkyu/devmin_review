@@ -2,12 +2,9 @@ package com.devmin.android_review.presentation.app.common
 
 import android.content.Context
 import android.os.Bundle
-import androidx.appcompat.widget.AppCompatImageView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.bumptech.glide.Glide
-import com.bumptech.glide.request.RequestOptions
 import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.HasAndroidInjector
@@ -62,11 +59,5 @@ abstract class BaseFragment<E : BaseViewModel> : Fragment(), HasAndroidInjector 
         })
         viewModelProvider = WeakReference(nonNullViewModelProviderVal)
         return nonNullViewModelProviderVal
-    }
-    protected fun loadGlideCircleImage(appCompatImageView: AppCompatImageView, url:String) {
-        Glide.with(appCompatImageView)
-            .load(url)
-            .apply(RequestOptions.circleCropTransform().circleCrop())
-            .into(appCompatImageView)
     }
 }

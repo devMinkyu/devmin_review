@@ -12,6 +12,7 @@ import com.devmin.android_review.databinding.FragmentFavoriteRoomBinding
 import com.devmin.android_review.entity.Room
 import com.devmin.android_review.presentation.app.common.BaseFragment
 import com.devmin.android_review.presentation.app.room.adapter.AllRoomAdapter
+import com.devmin.android_review.presentation.extension.baseIntent
 import kotlinx.android.synthetic.main.fragment_favorite_room.*
 
 class FavoriteRoomFragment : BaseFragment<FavoriteRoomFragmentViewModel>(),
@@ -43,6 +44,7 @@ class FavoriteRoomFragment : BaseFragment<FavoriteRoomFragmentViewModel>(),
 
     override fun roomEnd(room: Room) {
         getViewModel().end(room)
+        baseIntent("devmin://android.app/room/end/")
     }
 
     override fun like(room: Room) {}
