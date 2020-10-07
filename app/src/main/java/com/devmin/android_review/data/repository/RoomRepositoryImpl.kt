@@ -16,7 +16,7 @@ class RoomRepositoryImpl  @Inject constructor() : RoomRepository {
     lateinit var api:Api
 
     override fun read(key: Int): Single<List<Room>> {
-        return api.getRead().flatMap {
+        return api.getRead("${key}.json").flatMap {
             if(it.isSuccessful) {
                 Single.just(it.body()?.data?.product)
             } else {

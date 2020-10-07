@@ -30,7 +30,7 @@ class NetworkProviderModule{
             .addNetworkInterceptor(StethoInterceptor())
             .build()
 
-        val baseUrl = "https://gccompany.co.kr/App/json/"
+        val baseUrl = "https://gccompany.co.kr/"
 
         val retrofit = Retrofit.Builder()
             .client(opggClient)

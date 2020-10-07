@@ -11,6 +11,7 @@ import java.util.*
 data class Room(
     @PrimaryKey var id:Int = -1,
     var name: String ="",
+    var thumbnail: String ="",
     @Embedded var description: Description? = null,
     var rate: Double = 0.0,
     var lastUpdate: Date? = null,
