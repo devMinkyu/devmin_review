@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.devmin.android_review.R
 import com.devmin.android_review.databinding.ItemRoomBinding
+import com.devmin.android_review.entity.Result
 import com.devmin.android_review.entity.Room
 import com.devmin.android_review.presentation.app.common.BaseViewModel
 import com.devmin.android_review.presentation.app.room.AllRoomFragmentViewModel
@@ -36,6 +37,9 @@ class RoomAdapter(
     ).listAnimation() as RoomItemViewHolder
 
     override fun onBindViewHolder(holder: RoomItemViewHolder, position: Int) {
+        if(viewModel.isResult.get() != Result.SUCCESS) {
+            viewModel.isResult.set(Result.SUCCESS)
+        }
         val item = getItem(position)
         item?.let { room ->
             val favorite = when (viewModel) {

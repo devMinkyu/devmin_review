@@ -8,6 +8,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.devmin.android_review.R
 import com.devmin.android_review.databinding.FragmentFavoriteRoomBinding
+import com.devmin.android_review.entity.Result
 import com.devmin.android_review.entity.Room
 import com.devmin.android_review.entity.Sort
 import com.devmin.android_review.presentation.app.common.BaseFragment
@@ -53,6 +54,11 @@ class FavoriteRoomFragment : BaseFragment<FavoriteRoomFragmentViewModel>(),
 
     private fun connectPaging() {
         getViewModel().favoritePagedLiveData.observe(this.viewLifecycleOwner, {
+            if(it.isEmpty()) {
+                getViewModel().isResult.set(Result.EMPTY)
+            } else{
+                getViewModel().isResult.set(Result.SUCCESS)
+            }
             adapter?.submitList(it)
         })
     }

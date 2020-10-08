@@ -12,6 +12,7 @@
         <import type="com.devmin.android_review.presentation.app.room.FavoriteRoomFragmentViewModel" />
 
         <import type="com.devmin.android_review.entity.Sort" />
+        <import type="com.devmin.android_review.entity.Result" />
 
         <variable
             name="viewModel"
@@ -136,11 +137,18 @@
                 android:layout_height="5dp"
                 app:layout_constraintTop_toBottomOf="@id/latest" />
 
+            <androidx.constraintlayout.widget.Group
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:constraint_referenced_ids="sortBg,sortBgl,rateAsc,rateDesc,latest,oldest"
+                app:visible="@{viewModel.isResult == Result.SUCCESS}" />
+
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/favoriteReviewList"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
+                app:visible="@{viewModel.isResult == Result.SUCCESS}"
                 app:layout_constraintTop_toBottomOf="@id/sortBg" />
 
             <androidx.appcompat.widget.AppCompatTextView
@@ -159,7 +167,7 @@
                 android:text="@string/go_to_top"
                 android:textColor="@color/main_text"
                 android:textSize="14sp"
-                android:visibility="@{viewModel.isEmpty ? View.GONE:View.VISIBLE}"
+                app:visible="@{viewModel.isResult == Result.SUCCESS}"
                 app:bgCornerRadius="@{14.2f}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -169,6 +177,16 @@
                 android:layout_width="match_parent"
                 android:layout_height="80dp"
                 app:layout_constraintTop_toBottomOf="@id/goToTop" />
+
+            <include
+                layout="@layout/layout_base"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:viewHandler="@{viewHandler}"
+                app:viewModel="@{viewModel}"
+                app:visible="@{viewModel.isResult != Result.SUCCESS}" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
 </layout>

@@ -33,3 +33,15 @@ fun setTestStyle(view: View, isBold:Boolean) {
         view.setTypeface(DEFAULT_BOLD, BOLD)
     }
 }
+
+
+@BindingAdapter(value = ["visible"])
+fun setVisible(view: View?, visible: Boolean) {
+    view?.let { mView ->
+        if(visible) {
+            mView.makeVisible()
+        } else {
+            mView.makeGone()
+        }
+    }
+}

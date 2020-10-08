@@ -13,12 +13,12 @@
         xmlns:app="http://schemas.android.com/apk/res-auto">
 
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/emptyDescription"
+            android:id="@+id/errorDescription"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/empty_description"
-            android:gravity="center"
+            android:text="@string/error_description"
             android:textColor="@color/main_text"
+            android:gravity="center"
             android:textSize="20sp"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -44,7 +44,7 @@
             app:bgCornerRadius="@{14.2f}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/emptyDescription" />
+            app:layout_constraintTop_toBottomOf="@id/errorDescription" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

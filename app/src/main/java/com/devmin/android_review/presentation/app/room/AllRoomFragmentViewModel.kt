@@ -9,6 +9,7 @@ import androidx.paging.PageKeyedDataSource
 import androidx.paging.PagedList
 import com.devmin.android_review.data.local.AndroidPrefUtilService
 import com.devmin.android_review.domain.repository.RoomRepository
+import com.devmin.android_review.entity.Result
 import com.devmin.android_review.entity.Room
 import com.devmin.android_review.presentation.app.common.BaseViewModel
 import io.reactivex.rxjava3.schedulers.Schedulers
@@ -22,9 +23,6 @@ class AllRoomFragmentViewModel @Inject constructor() : BaseViewModel() {
     companion object {
         private var PAGE_KEY: Int = 1
     }
-
-    val error = ObservableBoolean(false)
-    val isEmpty = ObservableBoolean(true)
 
     var favoriteSet = mutableSetOf<String>()
     val favoriteMap = mutableMapOf<Int, ObservableBoolean>()
@@ -61,7 +59,7 @@ class AllRoomFragmentViewModel @Inject constructor() : BaseViewModel() {
     }
 
     fun refresh() {
-        isEmpty.set(true)
+        isResult.set(Result.LOADING)
         roomDataSourceFactory.refresh()
     }
 
@@ -114,12 +112,12 @@ class AllRoomFragmentViewModel @Inject constructor() : BaseViewModel() {
                 roomRepository.read(PAGE_KEY)
                     .observeOn(Schedulers.newThread())
                     .subscribe({
-                        isEmpty.set(it.isEmpty())
                         it?.let { list ->
                             PAGE_KEY += 1
                             callback.onResult(list, null, PAGE_KEY)
                         }
                     }) {
+                        isResult.set(Result.ERROR)
                         Timber.e(it)
                     }
             addDisposable(disposable)
@@ -141,6 +139,7 @@ class AllRoomFragmentViewModel @Inject constructor() : BaseViewModel() {
                         }
 
                     }) {
+                        isResult.set(Result.ERROR)
                         Timber.e(it)
                     }
             addDisposable(disposable)
@@ -156,6 +155,7 @@ class AllRoomFragmentViewModel @Inject constructor() : BaseViewModel() {
                             callback.onResult(list, PAGE_KEY)
                         }
                     }) {
+                        isResult.set(Result.ERROR)
                         Timber.e(it)
                     }
             addDisposable(disposable)
