@@ -69,8 +69,8 @@ class MainActivity : BaseActivity<MainActivityViewModel>() {
 
         override fun getPageTitle(position: Int): CharSequence {
             return when (position) {
-                1 -> resources.getString(R.string.mainRoom)
-                else -> resources.getString(R.string.favoriteRoom)
+                1 -> resources.getString(R.string.favoriteRoom)
+                else -> resources.getString(R.string.mainRoom)
             }
         }
     }
