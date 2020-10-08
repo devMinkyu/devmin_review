@@ -10,8 +10,8 @@
     <string name="oldest">오래된 순</string>
     <string name="rate_desc">평점 높은순</string>
     <string name="rate_asc">평점 낮은순</string>
-    <string name="empty_description">죄송합니다. 데이터가 존재하지 않습니다.</string>
+    <string name="empty_description">🙏죄송합니다.\n데이터가 존재하지 않습니다.</string>
     <string name="retry">다시 시도하기</string>
-    <string name="error_description">죄송합니다. 인터넷 연결 상태를 확인해주세요.\n잠시후 다시 시도해주세요.</string>
+    <string name="error_description">🙏 죄송합니다.\n인터넷 연결 상태를 확인하신 후,\n잠시후 다시 시도해주세요.</string>
 
 </resources>

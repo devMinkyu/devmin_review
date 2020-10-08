@@ -45,6 +45,7 @@ class FavoriteRoomFragmentViewModel @Inject constructor() : BaseViewModel() {
                 .toMutableSet()
         favoriteSet.remove("${room.id}")
         pref.putStringSet(AndroidPrefUtilService.Key.FAVORITE_ID, favoriteSet).blockingAwait()
+        roomRepository.refreshSubject.onNext(room.id)
         val disposable = roomRepository.delete(room, true)
             .subscribeOn(Schedulers.newThread())
             .subscribe()
