@@ -10,7 +10,7 @@ import com.devmin.android_review.R
 import com.devmin.android_review.databinding.FragmentAllRoomBinding
 import com.devmin.android_review.entity.Room
 import com.devmin.android_review.presentation.app.common.BaseFragment
-import com.devmin.android_review.presentation.app.room.adapter.AllRoomAdapter
+import com.devmin.android_review.presentation.app.room.adapter.RoomAdapter
 import com.devmin.android_review.presentation.extension.baseIntent
 import kotlinx.android.synthetic.main.fragment_all_room.*
 
@@ -31,7 +31,7 @@ class AllRoomFragment : BaseFragment<AllRoomFragmentViewModel>(), RoomFavoriteVi
         super.onViewCreated(view, savedInstanceState)
         allRoomList?.layoutManager = LinearLayoutManager(context)
         allRoomList.setItemViewCacheSize(20)
-        val adapter = AllRoomAdapter(requireContext(), getViewModel(), this)
+        val adapter = RoomAdapter(requireContext(), getViewModel(), this)
         getViewModel().roomPagedList?.observe(this.viewLifecycleOwner, {
             adapter.submitList(it)
             pullToRefresh?.isRefreshing = false

@@ -26,7 +26,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
-class AllRoomAdapter(
+class RoomAdapter(
     val context: Context,
     val viewModel: BaseViewModel,
     val viewHandler: RoomFavoriteViewHandler

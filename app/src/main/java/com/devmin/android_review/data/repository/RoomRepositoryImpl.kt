@@ -1,11 +1,9 @@
 package com.devmin.android_review.data.repository
 
 import androidx.paging.DataSource
-import com.devmin.android_review.common.Api
 import com.devmin.android_review.common.AppDatabase
 import com.devmin.android_review.data.http.RoomApi
 import com.devmin.android_review.domain.repository.RoomRepository
-import com.devmin.android_review.entity.Filter
 import com.devmin.android_review.entity.Room
 import com.devmin.android_review.entity.Sort
 import io.reactivex.rxjava3.core.Completable
@@ -29,20 +27,12 @@ class RoomRepositoryImpl  @Inject constructor() : RoomRepository {
         }
     }
 
-    override fun favoriteRead(sort: Sort, filter: Filter): DataSource.Factory<Int, Room> {
+    override fun favoriteRead(sort: Sort): DataSource.Factory<Int, Room> {
         return when(sort) {
-            Sort.ASC -> {
-                when(filter) {
-                    Filter.LATEST -> db.favoritesDao().getRoomsOfDateASC()
-                    Filter.RATE -> db.favoritesDao().getRoomsOfRateASC()
-                }
-            }
-            Sort.DESC -> {
-                when(filter) {
-                    Filter.LATEST -> db.favoritesDao().getRoomsOfDateDESC()
-                    Filter.RATE -> db.favoritesDao().getRoomsOfRateDESC()
-                }
-            }
+            Sort.RATE_DESC -> db.favoritesDao().getRoomsOfRateDESC()
+            Sort.RATE_ASC -> db.favoritesDao().getRoomsOfRateASC()
+            Sort.OLDEST -> db.favoritesDao().getRoomsOfOldest()
+            Sort.LATEST -> db.favoritesDao().getRoomsOfLatest()
         }
     }
 

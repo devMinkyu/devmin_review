@@ -6,5 +6,9 @@
     <string name="rate">%1.1f</string>
     <string name="price">%d원</string>
     <string name="go_to_top">위로 가기</string>
+    <string name="latest">최신 등록순</string>
+    <string name="oldest">오래된 순</string>
+    <string name="rate_desc">평점 높은순</string>
+    <string name="rate_asc">평점 낮은순</string>
 
 </resources>

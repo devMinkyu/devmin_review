@@ -1,7 +1,6 @@
 package com.devmin.android_review.domain.repository
 
 import androidx.paging.DataSource
-import com.devmin.android_review.entity.Filter
 import com.devmin.android_review.entity.Room
 import com.devmin.android_review.entity.Sort
 import io.reactivex.rxjava3.core.Completable
@@ -24,6 +23,6 @@ interface RoomRepository {
 
     fun create(room: Room, favorite: Boolean): Completable
     fun delete(room: Room, favorite: Boolean): Completable
-    fun favoriteRead(sort:Sort, filter: Filter): DataSource.Factory<Int, Room>
+    fun favoriteRead(sort:Sort): DataSource.Factory<Int, Room>
     fun read(key: Int): Single<List<Room>>
 }

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -9,6 +10,8 @@
         <import type="com.devmin.android_review.presentation.app.room.FavoriteRoomFragment.ViewHandler" />
 
         <import type="com.devmin.android_review.presentation.app.room.FavoriteRoomFragmentViewModel" />
+
+        <import type="com.devmin.android_review.entity.Sort" />
 
         <variable
             name="viewModel"
@@ -29,11 +32,116 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/lgl"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:orientation="vertical"
+                app:layout_constraintGuide_begin="22dp" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/rgl"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:orientation="vertical"
+                app:layout_constraintGuide_end="22dp" />
+
+            <View
+                android:id="@+id/sortBg"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginTop="10dp"
+                android:background="@color/filter_background"
+                app:bgCornerRadius="@{15f}"
+                app:layout_constraintBottom_toBottomOf="@id/sortBgl"
+                app:layout_constraintEnd_toEndOf="@id/rgl"
+                app:layout_constraintStart_toStartOf="@id/lgl"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/latest"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="5dp"
+                android:background="?attr/selectableItemBackground"
+                android:onClick="@{() -> viewHandler.sort(Sort.LATEST)}"
+                android:padding="10dp"
+                android:text="@string/latest"
+                android:textColor="@{viewModel.sortType == Sort.LATEST ? @color/main_text:@color/hint_text}"
+                android:textSize="12sp"
+                app:layout_constraintEnd_toStartOf="@id/oldest"
+                app:layout_constraintStart_toStartOf="@id/sortBg"
+                app:layout_constraintTop_toTopOf="@id/sortBg"
+                app:text_style="@{viewModel.sortType == Sort.LATEST}"
+                tools:textColor="@color/main_text"
+                tools:textStyle="bold" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/oldest"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="?attr/selectableItemBackground"
+                android:onClick="@{() -> viewHandler.sort(Sort.OLDEST)}"
+                android:padding="10dp"
+                android:text="@string/oldest"
+                android:textColor="@{viewModel.sortType == Sort.OLDEST ? @color/main_text:@color/hint_text}"
+                android:textSize="12sp"
+                app:layout_constraintBottom_toBottomOf="@id/latest"
+                app:layout_constraintEnd_toStartOf="@id/rateDesc"
+                app:layout_constraintStart_toEndOf="@id/latest"
+                app:layout_constraintTop_toTopOf="@id/latest"
+                app:text_style="@{viewModel.sortType == Sort.OLDEST}"
+                tools:textColor="@color/main_text"
+                tools:textStyle="bold" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/rateDesc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="?attr/selectableItemBackground"
+                android:onClick="@{() -> viewHandler.sort(Sort.RATE_DESC)}"
+                android:padding="10dp"
+                android:text="@string/rate_desc"
+                android:textColor="@{viewModel.sortType == Sort.RATE_DESC ? @color/main_text:@color/hint_text}"
+                android:textSize="12sp"
+                app:layout_constraintBottom_toBottomOf="@id/latest"
+                app:layout_constraintEnd_toStartOf="@id/rateAsc"
+                app:layout_constraintStart_toEndOf="@id/oldest"
+                app:layout_constraintTop_toTopOf="@id/latest"
+                app:text_style="@{viewModel.sortType == Sort.RATE_DESC}"
+                tools:textColor="@color/hint_text" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/rateAsc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="5dp"
+                android:background="?attr/selectableItemBackground"
+                android:onClick="@{() -> viewHandler.sort(Sort.RATE_ASC)}"
+                android:padding="10dp"
+                android:text="@string/rate_asc"
+                android:textColor="@{viewModel.sortType == Sort.RATE_ASC ? @color/main_text:@color/hint_text}"
+                android:textSize="12sp"
+                app:layout_constraintBottom_toBottomOf="@id/latest"
+                app:layout_constraintEnd_toEndOf="@id/sortBg"
+                app:layout_constraintStart_toEndOf="@id/rateDesc"
+                app:layout_constraintTop_toTopOf="@id/latest"
+                app:text_style="@{viewModel.sortType == Sort.RATE_ASC}"
+                tools:textColor="@color/hint_text" />
+
+            <Space
+                android:id="@+id/sortBgl"
+                android:layout_width="match_parent"
+                android:layout_height="5dp"
+                app:layout_constraintTop_toBottomOf="@id/latest" />
+
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/favoriteReviewList"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:layout_constraintTop_toTopOf="parent" />
+                android:layout_marginTop="15dp"
+                app:layout_constraintTop_toBottomOf="@id/sortBg" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/goToTop"

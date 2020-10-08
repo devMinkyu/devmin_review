@@ -5,19 +5,20 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.devmin.android_review.R
 import com.devmin.android_review.databinding.FragmentFavoriteRoomBinding
 import com.devmin.android_review.entity.Room
+import com.devmin.android_review.entity.Sort
 import com.devmin.android_review.presentation.app.common.BaseFragment
-import com.devmin.android_review.presentation.app.room.adapter.AllRoomAdapter
+import com.devmin.android_review.presentation.app.room.adapter.RoomAdapter
 import com.devmin.android_review.presentation.extension.baseIntent
 import kotlinx.android.synthetic.main.fragment_favorite_room.*
 
 class FavoriteRoomFragment : BaseFragment<FavoriteRoomFragmentViewModel>(),
     RoomFavoriteViewHandler {
     private lateinit var binding: FragmentFavoriteRoomBinding
+    var adapter:RoomAdapter? = null
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -34,12 +35,21 @@ class FavoriteRoomFragment : BaseFragment<FavoriteRoomFragmentViewModel>(),
         super.onViewCreated(view, savedInstanceState)
         favoriteReviewList?.layoutManager = LinearLayoutManager(context)
         favoriteReviewList?.setItemViewCacheSize(20)
-        val adapter = AllRoomAdapter(requireContext(), getViewModel(), this)
+
+        adapter = RoomAdapter(requireContext(), getViewModel(), this)
         favoriteReviewList?.adapter = adapter
-        getViewModel().favoritePagedLiveData.observe(
-            this.viewLifecycleOwner,
-            Observer(adapter::submitList)
-        )
+
+        getViewModel().favoritePagedLiveData.observe(this.viewLifecycleOwner, {
+            adapter?.submitList(it)
+        })
+        getViewModel().filterLiveData.observe(this.viewLifecycleOwner, {
+            it.getContentIfNotHandled()?.let {
+                if(adapter == null) {
+                    adapter = RoomAdapter(requireContext(), getViewModel(), this)
+                    favoriteReviewList?.adapter = adapter
+                }
+            }
+        })
     }
 
     override fun roomEnd(room: Room) {
@@ -55,7 +65,12 @@ class FavoriteRoomFragment : BaseFragment<FavoriteRoomFragmentViewModel>(),
 
     inner class ViewHandler {
         fun goToTop() {
-//            roomContainer?.scrollTo(0, 0)
+            roomContainer?.scrollTo(0, 0)
+        }
+        fun sort(sort: Sort) {
+            getViewModel().sort(sort)
+            adapter = null
+            favoriteReviewList?.adapter = null
         }
     }
 }
