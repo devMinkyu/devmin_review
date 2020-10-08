@@ -61,5 +61,9 @@ class FavoriteRoomFragmentViewModel @Inject constructor() : BaseViewModel() {
         loadFavoritePaged()
         filterLiveData.postValue(Event(Any()))
     }
+    fun refresh() {
+        loadFavoritePaged()
+        filterLiveData.postValue(Event(Any()))
+    }
 }
 

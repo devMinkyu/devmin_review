@@ -10,6 +10,7 @@ import com.devmin.android_review.R
 import com.devmin.android_review.databinding.FragmentAllRoomBinding
 import com.devmin.android_review.entity.Room
 import com.devmin.android_review.presentation.app.common.BaseFragment
+import com.devmin.android_review.presentation.app.common.BaseViewHandler
 import com.devmin.android_review.presentation.app.room.adapter.RoomAdapter
 import com.devmin.android_review.presentation.extension.baseIntent
 import kotlinx.android.synthetic.main.fragment_all_room.*
@@ -56,9 +57,13 @@ class AllRoomFragment : BaseFragment<AllRoomFragmentViewModel>(), RoomFavoriteVi
         getViewModel().delete(room)
     }
 
-    inner class ViewHandler {
+    inner class ViewHandler : BaseViewHandler() {
         fun goToTop() {
             roomContainer?.scrollTo(0, 0)
+        }
+
+        override fun retry() {
+            getViewModel().refresh()
         }
     }
 }

@@ -11,6 +11,7 @@ import com.devmin.android_review.databinding.FragmentFavoriteRoomBinding
 import com.devmin.android_review.entity.Room
 import com.devmin.android_review.entity.Sort
 import com.devmin.android_review.presentation.app.common.BaseFragment
+import com.devmin.android_review.presentation.app.common.BaseViewHandler
 import com.devmin.android_review.presentation.app.room.adapter.RoomAdapter
 import com.devmin.android_review.presentation.extension.baseIntent
 import kotlinx.android.synthetic.main.fragment_favorite_room.*
@@ -67,14 +68,21 @@ class FavoriteRoomFragment : BaseFragment<FavoriteRoomFragmentViewModel>(),
         getViewModel().delete(room)
     }
 
-    inner class ViewHandler {
+    inner class ViewHandler : BaseViewHandler(){
         fun goToTop() {
             roomContainer?.scrollTo(0, 0)
         }
         fun sort(sort: Sort) {
-            getViewModel().sort(sort)
             adapter = null
             favoriteReviewList?.adapter = null
+            getViewModel().sort(sort)
+        }
+
+        override fun retry() {
+            super.retry()
+            adapter = null
+            favoriteReviewList?.adapter = null
+            getViewModel().refresh()
         }
     }
 }
