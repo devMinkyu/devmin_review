@@ -62,7 +62,10 @@ class RoomAdapter(
 
 
             CoroutineScope(Dispatchers.IO).launch {
-                delay(800)
+                when (viewModel) {
+                    is FavoriteRoomFragmentViewModel -> delay(300)
+                    else -> delay(800)
+                }
                 holder.itemView.skeletonGroup?.finishAnimation()
             }
             holder.itemView.like?.setOnClickListener {
