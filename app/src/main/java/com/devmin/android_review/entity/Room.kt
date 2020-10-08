@@ -16,3 +16,9 @@ data class Room(
     var rate: Double = 0.0,
     var lastUpdate: Date? = null,
 )
+
+data class Description(
+    var imagePath:String = "",
+    var subject: String = "",
+    var price:Int = 0
+)

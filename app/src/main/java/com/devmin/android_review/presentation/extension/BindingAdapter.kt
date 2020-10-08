@@ -17,16 +17,6 @@ fun setBackgroundCornerRadius(view: View?, cornerRadius: Float) {
         mView.background = gradientDrawable
     } ?: return
 }
-
-@BindingAdapter("layout_constraintDimensionRatio")
-fun setConstraintDimensionRatio(view: View, ratio: String?) {
-    if (view.parent is ConstraintLayout) {
-        val layoutParams =
-            view.layoutParams as ConstraintLayout.LayoutParams
-        layoutParams.dimensionRatio = ratio
-        view.layoutParams = layoutParams
-    }
-}
 @BindingAdapter("text_style")
 fun setTestStyle(view: View, isBold:Boolean) {
     if(view is TextView) {
