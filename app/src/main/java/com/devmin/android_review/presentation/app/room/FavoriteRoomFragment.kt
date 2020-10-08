@@ -38,17 +38,21 @@ class FavoriteRoomFragment : BaseFragment<FavoriteRoomFragmentViewModel>(),
 
         adapter = RoomAdapter(requireContext(), getViewModel(), this)
         favoriteReviewList?.adapter = adapter
-
-        getViewModel().favoritePagedLiveData.observe(this.viewLifecycleOwner, {
-            adapter?.submitList(it)
-        })
+        connectPaging()
         getViewModel().filterLiveData.observe(this.viewLifecycleOwner, {
             it.getContentIfNotHandled()?.let {
                 if(adapter == null) {
                     adapter = RoomAdapter(requireContext(), getViewModel(), this)
                     favoriteReviewList?.adapter = adapter
+                    connectPaging()
                 }
             }
+        })
+    }
+
+    private fun connectPaging() {
+        getViewModel().favoritePagedLiveData.observe(this.viewLifecycleOwner, {
+            adapter?.submitList(it)
         })
     }
 
