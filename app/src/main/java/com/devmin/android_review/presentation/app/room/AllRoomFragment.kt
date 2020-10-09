@@ -63,7 +63,7 @@ class AllRoomFragment : BaseFragment<AllRoomFragmentViewModel>(), RoomFavoriteVi
 
     inner class ViewHandler : BaseViewHandler() {
         fun goToTop() {
-            allRoomList?.smoothScrollToPosition(0)
+            allRoomList?.scrollToPosition(0)
         }
 
         override fun retry() {
