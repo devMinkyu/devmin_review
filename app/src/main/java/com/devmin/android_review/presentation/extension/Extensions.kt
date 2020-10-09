@@ -7,6 +7,7 @@ import android.view.animation.AlphaAnimation
 import android.view.animation.Animation
 import android.view.animation.AnimationSet
 import android.view.animation.TranslateAnimation
+import android.widget.ImageView
 import androidx.annotation.IdRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
@@ -14,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.devmin.android_review.BuildConfig
 import com.devmin.android_review.R
 import com.devmin.android_review.presentation.app.common.BaseFragment
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 
 fun View.makeGone() {
@@ -69,4 +71,40 @@ fun View.listAnimation() {
 fun RecyclerView.ViewHolder.listAnimation(): RecyclerView.ViewHolder {
     this.itemView.listAnimation()
     return this
+}
+
+fun RecyclerView.showBackToTopAnimation(backToTop: FloatingActionButton) {
+    val animator = backToTop.animate().setDuration(250)
+        .translationY(backToTop.height.toFloat() + 250f)
+    animator.start()
+    this.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+        var showBackToTop = false
+        var mNewState = 0
+        override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+            super.onScrolled(recyclerView, dx, dy)
+            if (mNewState == 1) {
+                if (dy > 0 && showBackToTop.not()) {
+                    showBackToTop = true
+                    val animator1 = backToTop.animate().setDuration(250)
+                        .translationY(0f)
+                    animator1.start()
+                }
+            }
+        }
+
+        override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+            super.onScrollStateChanged(recyclerView, newState)
+            this.mNewState = newState
+            try {
+                if (this@showBackToTopAnimation.canScrollVertically(-1).not()) {
+                    showBackToTop = false
+                    val animator1 = backToTop.animate().setDuration(250)
+                        .translationY(backToTop.height.toFloat() + 250f)
+                    animator1.start()
+                }
+            } catch (e: NullPointerException) {
+                this@showBackToTopAnimation.scrollToPosition(0)
+            }
+        }
+    })
 }

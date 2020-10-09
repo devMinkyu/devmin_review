@@ -13,6 +13,7 @@ import com.devmin.android_review.presentation.app.common.BaseFragment
 import com.devmin.android_review.presentation.app.common.BaseViewHandler
 import com.devmin.android_review.presentation.app.room.adapter.RoomAdapter
 import com.devmin.android_review.presentation.extension.baseIntent
+import com.devmin.android_review.presentation.extension.showBackToTopAnimation
 import kotlinx.android.synthetic.main.fragment_all_room.*
 
 class AllRoomFragment : BaseFragment<AllRoomFragmentViewModel>(), RoomFavoriteViewHandler {
@@ -42,6 +43,9 @@ class AllRoomFragment : BaseFragment<AllRoomFragmentViewModel>(), RoomFavoriteVi
         pullToRefresh?.setOnRefreshListener {
             getViewModel().refresh()
         }
+        goToTop?.let { floatingActionButton ->
+            allRoomList?.showBackToTopAnimation(floatingActionButton)
+        }
     }
 
     override fun roomEnd(room: Room) {
@@ -59,7 +63,7 @@ class AllRoomFragment : BaseFragment<AllRoomFragmentViewModel>(), RoomFavoriteVi
 
     inner class ViewHandler : BaseViewHandler() {
         fun goToTop() {
-            roomContainer?.scrollTo(0, 0)
+            allRoomList?.smoothScrollToPosition(0)
         }
 
         override fun retry() {

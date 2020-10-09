@@ -3,10 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
-        <import type="android.view.View"/>
+
+        <import type="android.view.View" />
+
         <import type="com.devmin.android_review.presentation.app.room.AllRoomFragment.ViewHandler" />
 
         <import type="com.devmin.android_review.presentation.app.room.AllRoomFragmentViewModel" />
+
         <import type="com.devmin.android_review.entity.Result" />
 
         <variable
@@ -17,64 +20,44 @@
             name="viewHandler"
             type="ViewHandler" />
     </data>
-
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/pullToRefresh"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <androidx.core.widget.NestedScrollView
-            android:id="@+id/roomContainer"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:fillViewport="true">
+            android:layout_height="match_parent">
 
-            <androidx.constraintlayout.widget.ConstraintLayout
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/allRoomList"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="parent" />
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/allRoomList"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintTop_toTopOf="parent" />
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/goToTop"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="40dp"
+                android:layout_marginBottom="40dp"
+                android:onClick="@{() -> viewHandler.goToTop()}"
+                android:src="@drawable/icon_upward"
+                app:elevation="0dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                />
 
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/goToTop"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
-                    android:background="@color/list_loading"
-                    android:gravity="center_horizontal"
-                    android:lineSpacingExtra="9.5sp"
-                    android:onClick="@{() -> viewHandler.goToTop()}"
-                    android:paddingStart="10dp"
-                    android:paddingTop="6.5dp"
-                    android:paddingEnd="10dp"
-                    android:paddingBottom="6.5dp"
-                    android:text="@string/go_to_top"
-                    android:textColor="@color/main_text"
-                    android:textSize="14sp"
-                    app:visible="@{viewModel.isResult == Result.SUCCESS}"
-                    app:bgCornerRadius="@{14.2f}"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/allRoomList" />
-
-                <Space
-                    android:layout_width="match_parent"
-                    android:layout_height="80dp"
-                    app:layout_constraintTop_toBottomOf="@id/goToTop" />
-
-                <include
-                    layout="@layout/layout_base"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:viewHandler="@{viewHandler}"
-                    app:viewModel="@{viewModel}"
-                    app:visible="@{viewModel.isResult != Result.SUCCESS}" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
-        </androidx.core.widget.NestedScrollView>
+            <include
+                layout="@layout/layout_base"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:viewHandler="@{viewHandler}"
+                app:viewModel="@{viewModel}"
+                app:visible="@{viewModel.isResult != Result.SUCCESS}" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 </layout>

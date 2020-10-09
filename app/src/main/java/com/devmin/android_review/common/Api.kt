@@ -13,7 +13,7 @@ interface Api {
     @GET
     fun get(
         @Url url: String,
-        @QueryMap options: Map<String, Any>,
+        @QueryMap options: Map<String, String>,
     ): Single<Response<DataResponse>>
 
     @POST

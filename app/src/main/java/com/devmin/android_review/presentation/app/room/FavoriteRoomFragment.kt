@@ -15,7 +15,11 @@ import com.devmin.android_review.presentation.app.common.BaseFragment
 import com.devmin.android_review.presentation.app.common.BaseViewHandler
 import com.devmin.android_review.presentation.app.room.adapter.RoomAdapter
 import com.devmin.android_review.presentation.extension.baseIntent
+import com.devmin.android_review.presentation.extension.makeGone
+import com.devmin.android_review.presentation.extension.makeVisible
+import com.google.android.material.appbar.AppBarLayout
 import kotlinx.android.synthetic.main.fragment_favorite_room.*
+import kotlin.math.abs
 
 class FavoriteRoomFragment : BaseFragment<FavoriteRoomFragmentViewModel>(),
     RoomFavoriteViewHandler {
@@ -43,11 +47,19 @@ class FavoriteRoomFragment : BaseFragment<FavoriteRoomFragmentViewModel>(),
         connectPaging()
         getViewModel().filterLiveData.observe(this.viewLifecycleOwner, {
             it.getContentIfNotHandled()?.let {
-                if(adapter == null) {
+                if (adapter == null) {
                     adapter = RoomAdapter(requireContext(), getViewModel(), this)
                     favoriteReviewList?.adapter = adapter
                     connectPaging()
                 }
+            }
+        })
+
+        appBarLayout?.addOnOffsetChangedListener(AppBarLayout.OnOffsetChangedListener { appBarLayout, verticalOffset ->
+            if (abs(verticalOffset) - appBarLayout.totalScrollRange == 0) {
+                goToTop?.makeVisible()
+            } else {
+                goToTop?.makeGone()
             }
         })
     }
@@ -76,7 +88,8 @@ class FavoriteRoomFragment : BaseFragment<FavoriteRoomFragmentViewModel>(),
 
     inner class ViewHandler : BaseViewHandler(){
         fun goToTop() {
-            roomContainer?.scrollTo(0, 0)
+            appBarLayout?.setExpanded(true, true)
+            favoriteReviewList?.scrollToPosition(0)
         }
         fun sort(sort: Sort) {
             adapter = null
