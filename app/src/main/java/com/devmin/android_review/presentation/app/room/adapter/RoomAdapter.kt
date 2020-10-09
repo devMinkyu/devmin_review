@@ -60,14 +60,6 @@ class RoomAdapter(
                 holder.itemView.lastUpdate?.setReferenceTime(it.time)
             } ?: holder.itemView.lastDate?.makeGone()
 
-
-            CoroutineScope(Dispatchers.IO).launch {
-                when (viewModel) {
-                    is FavoriteRoomFragmentViewModel -> delay(300)
-                    else -> delay(800)
-                }
-                holder.itemView.skeletonGroup?.finishAnimation()
-            }
             holder.itemView.like?.setOnClickListener {
                 favorite.set(favorite.get().not())
                 if (favorite.get()) {
@@ -78,6 +70,11 @@ class RoomAdapter(
             }
             if (TextUtils.isEmpty(room.thumbnail).not()) {
                 settingImage(holder, room)
+            }
+            CoroutineScope(Dispatchers.IO).launch {
+                delay(500)
+                holder.itemView.skeletonGroup?.finishAnimation()
+                holder.itemView.skeletonGroup?.setShowSkeleton(false)
             }
         }
     }
