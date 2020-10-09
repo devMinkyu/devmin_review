@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">android_review</string>
+    <string name="app_name">즐겨찾기</string>
     <string name="mainRoom">전체</string>
     <string name="favoriteRoom">즐겨찾기</string>
 
