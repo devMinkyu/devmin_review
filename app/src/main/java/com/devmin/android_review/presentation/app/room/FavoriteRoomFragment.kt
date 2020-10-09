@@ -43,8 +43,8 @@ class FavoriteRoomFragment : BaseFragment<FavoriteRoomFragmentViewModel>(),
         favoriteReviewList?.setItemViewCacheSize(20)
 
         adapter = RoomAdapter(requireContext(), getViewModel(), this)
-        favoriteReviewList?.adapter = adapter
         connectPaging()
+        favoriteReviewList?.adapter = adapter
         getViewModel().filterLiveData.observe(this.viewLifecycleOwner, {
             it.getContentIfNotHandled()?.let {
                 if (adapter == null) {
@@ -57,7 +57,11 @@ class FavoriteRoomFragment : BaseFragment<FavoriteRoomFragmentViewModel>(),
 
         appBarLayout?.addOnOffsetChangedListener(AppBarLayout.OnOffsetChangedListener { appBarLayout, verticalOffset ->
             if (abs(verticalOffset) - appBarLayout.totalScrollRange == 0) {
-                goToTop?.makeVisible()
+                if(getViewModel().isResult.get() == Result.SUCCESS) {
+                    goToTop?.makeVisible()
+                } else {
+                    goToTop?.makeGone()
+                }
             } else {
                 goToTop?.makeGone()
             }
