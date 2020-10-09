@@ -63,6 +63,9 @@ class AllRoomFragment : BaseFragment<AllRoomFragmentViewModel>(), RoomFavoriteVi
 
     inner class ViewHandler : BaseViewHandler() {
         fun goToTop() {
+            val animator = goToTop?.animate()?.setDuration(250)
+                ?.translationY(goToTop.height.toFloat() + 250f)
+            animator?.start()
             allRoomList?.scrollToPosition(0)
         }
 

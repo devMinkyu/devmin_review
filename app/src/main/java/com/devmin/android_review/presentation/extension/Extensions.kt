@@ -38,16 +38,6 @@ fun AppCompatActivity.leftReplace(@IdRes id: Int, frag: BaseFragment<*>) {
         .replace(id, frag, null).commit()
 }
 
-fun Fragment.transactionFragment(frag: BaseFragment<*>, @IdRes id: Int) {
-    if (frag.isAdded) {
-        childFragmentManager.beginTransaction().show(frag)
-    } else {
-        childFragmentManager.beginTransaction()
-            .replace(id, frag, null)
-            .commitNow()
-    }
-}
-
 fun Fragment.baseIntent(uri:String) {
     val intent = Intent(
         Intent.ACTION_VIEW,
