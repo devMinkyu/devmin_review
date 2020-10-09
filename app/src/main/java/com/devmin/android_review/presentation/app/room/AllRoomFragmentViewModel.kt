@@ -125,7 +125,7 @@ class AllRoomFragmentViewModel @Inject constructor() : BaseViewModel() {
 
         override fun loadBefore(params: LoadParams<Int>, callback: LoadCallback<Int, Room>) {
             val disposable =
-                roomRepository.read(PAGE_KEY)
+                roomRepository.read(params.key)
                     .observeOn(Schedulers.newThread())
                     .subscribe({
                         it?.let { list ->
