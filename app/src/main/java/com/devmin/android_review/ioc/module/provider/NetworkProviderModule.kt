@@ -26,7 +26,7 @@ class NetworkProviderModule{
     ): Api {
         val moshiConverterFactory = MoshiConverterFactory.create(moshi)
 
-        val opggClient = client.newBuilder()
+        val remoteClient = client.newBuilder()
             .retryOnConnectionFailure(true)
             .addNetworkInterceptor(StethoInterceptor())
             .build()
@@ -34,7 +34,7 @@ class NetworkProviderModule{
         val baseUrl = "https://gccompany.co.kr/"
 
         val retrofit = Retrofit.Builder()
-            .client(opggClient)
+            .client(remoteClient)
             .baseUrl(baseUrl)
             .addConverterFactory(moshiConverterFactory)
             .addCallAdapterFactory(RxJava3CallAdapterFactory.createWithScheduler(Schedulers.newThread()))
