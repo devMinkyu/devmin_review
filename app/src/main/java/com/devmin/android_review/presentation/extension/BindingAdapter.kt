@@ -1,10 +1,8 @@
 package com.devmin.android_review.presentation.extension
 
-import android.graphics.Typeface.BOLD
-import android.graphics.Typeface.DEFAULT_BOLD
+import android.graphics.Typeface.*
 import android.view.View
 import android.widget.TextView
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.databinding.BindingAdapter
 
 @BindingAdapter(value = ["bgCornerRadius"])
@@ -20,7 +18,11 @@ fun setBackgroundCornerRadius(view: View?, cornerRadius: Float) {
 @BindingAdapter("text_style")
 fun setTestStyle(view: View, isBold:Boolean) {
     if(view is TextView) {
-        view.setTypeface(DEFAULT_BOLD, BOLD)
+        if (isBold) {
+            view.setTypeface(DEFAULT_BOLD, BOLD)
+        } else {
+            view.setTypeface(DEFAULT, NORMAL)
+        }
     }
 }
 

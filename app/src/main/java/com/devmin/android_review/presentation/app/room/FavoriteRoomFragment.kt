@@ -17,6 +17,7 @@ import com.devmin.android_review.presentation.app.room.adapter.RoomAdapter
 import com.devmin.android_review.presentation.extension.baseIntent
 import com.devmin.android_review.presentation.extension.makeGone
 import com.devmin.android_review.presentation.extension.makeVisible
+import com.devmin.android_review.presentation.extension.showBackToTopAnimation
 import com.google.android.material.appbar.AppBarLayout
 import kotlinx.android.synthetic.main.fragment_favorite_room.*
 import kotlin.math.abs
@@ -55,17 +56,23 @@ class FavoriteRoomFragment : BaseFragment<FavoriteRoomFragmentViewModel>(),
             }
         })
 
-        appBarLayout?.addOnOffsetChangedListener(AppBarLayout.OnOffsetChangedListener { appBarLayout, verticalOffset ->
-            if (abs(verticalOffset) - appBarLayout.totalScrollRange == 0) {
-                if(getViewModel().isResult.get() == Result.SUCCESS) {
-                    goToTop?.makeVisible()
+        goToTop?.let { floatingActionButton ->
+            appBarLayout?.addOnOffsetChangedListener(AppBarLayout.OnOffsetChangedListener { appBarLayout, verticalOffset ->
+                val animator = if (abs(verticalOffset) - appBarLayout.totalScrollRange == 0) {
+                    if (getViewModel().isResult.get() == Result.SUCCESS) {
+                        floatingActionButton.animate().setDuration(250)
+                            .translationY(0f)
+                    } else {
+                        floatingActionButton.animate().setDuration(250)
+                            .translationY(floatingActionButton.height.toFloat() + 250f)
+                    }
                 } else {
-                    goToTop?.makeGone()
+                    floatingActionButton.animate().setDuration(250)
+                        .translationY(floatingActionButton.height.toFloat() + 250f)
                 }
-            } else {
-                goToTop?.makeGone()
-            }
-        })
+                animator.start()
+            })
+        }
     }
 
     private fun connectPaging() {

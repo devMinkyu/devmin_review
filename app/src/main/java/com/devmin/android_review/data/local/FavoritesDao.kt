@@ -14,6 +14,9 @@ interface FavoritesDao {
     fun deleteRoom(vararg room: Room): Completable
 
     @Query("SELECT * FROM rooms Order By lastUpdate ASC")
+    fun getRoomsTest(): List<Room>
+
+    @Query("SELECT * FROM rooms Order By lastUpdate ASC")
     fun getRoomsOfOldest(): DataSource.Factory<Int, Room>
 
     @Query("SELECT * FROM rooms Order By lastUpdate DESC")

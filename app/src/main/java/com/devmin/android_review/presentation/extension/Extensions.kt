@@ -7,15 +7,17 @@ import android.view.animation.AlphaAnimation
 import android.view.animation.Animation
 import android.view.animation.AnimationSet
 import android.view.animation.TranslateAnimation
-import android.widget.ImageView
 import androidx.annotation.IdRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import com.devmin.android_review.BuildConfig
 import com.devmin.android_review.R
+import com.devmin.android_review.entity.Result
 import com.devmin.android_review.presentation.app.common.BaseFragment
+import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import kotlin.math.abs
 
 
 fun View.makeGone() {
