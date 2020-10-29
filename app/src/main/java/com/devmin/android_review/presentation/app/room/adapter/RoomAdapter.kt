@@ -1,6 +1,5 @@
 package com.devmin.android_review.presentation.app.room.adapter
 
-import android.content.Context
 import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
@@ -28,12 +27,11 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 class RoomAdapter(
-    val context: Context,
     val viewModel: BaseViewModel,
     val viewHandler: RoomFavoriteViewHandler
 ) : PagedListAdapter<Room, RoomItemViewHolder>(RoomDiffUtil()) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = RoomItemViewHolder(
-        LayoutInflater.from(context).inflate(R.layout.item_room, parent, false)
+        LayoutInflater.from(parent.context).inflate(R.layout.item_room, parent, false)
     ).listAnimation() as RoomItemViewHolder
 
     override fun onBindViewHolder(holder: RoomItemViewHolder, position: Int) {
@@ -52,29 +50,38 @@ class RoomAdapter(
                 }
                 else -> ObservableBoolean(false)
             }
-            holder.binding?.room = room
-            holder.binding?.favorite = favorite
-            holder.binding?.viewHandler = viewHandler
-
-            room.lastUpdate?.let {
-                holder.itemView.lastUpdate?.setReferenceTime(it.time)
-            } ?: holder.itemView.lastDate?.makeGone()
-
-            holder.itemView.like?.setOnClickListener {
-                favorite.set(favorite.get().not())
-                if (favorite.get()) {
-                    viewHandler.like(room)
-                } else {
-                    viewHandler.unlike(room)
+            holder.binding?.let {
+                with(holder.binding) {
+                    this.room = room
+                    this.favorite = favorite
+                    this.viewHandler = viewHandler
                 }
             }
-            if (TextUtils.isEmpty(room.thumbnail).not()) {
-                settingImage(holder, room)
-            }
-            CoroutineScope(Dispatchers.IO).launch {
-                delay(500)
-                holder.itemView.skeletonGroup?.finishAnimation()
-                holder.itemView.skeletonGroup?.setShowSkeleton(false)
+//            holder.binding?.room = room
+//            holder.binding?.favorite = favorite
+//            holder.binding?.viewHandler = viewHandler
+
+            with(holder.itemView) {
+                room.lastUpdate?.let {
+                    lastUpdate?.setReferenceTime(it.time)
+                } ?: lastDate?.makeGone()
+
+                like?.setOnClickListener {
+                    favorite.set(favorite.get().not())
+                    if (favorite.get()) {
+                        viewHandler.like(room)
+                    } else {
+                        viewHandler.unlike(room)
+                    }
+                }
+                if (TextUtils.isEmpty(room.thumbnail).not()) {
+                    settingImage(holder, room)
+                }
+                CoroutineScope(Dispatchers.IO).launch {
+                    delay(500)
+                    skeletonGroup?.finishAnimation()
+                    skeletonGroup?.setShowSkeleton(false)
+                }
             }
         }
     }

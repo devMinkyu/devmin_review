@@ -33,7 +33,7 @@ class AllRoomFragment : BaseFragment<AllRoomFragmentViewModel>(), RoomFavoriteVi
         super.onViewCreated(view, savedInstanceState)
         allRoomList?.layoutManager = LinearLayoutManager(context)
         allRoomList.setItemViewCacheSize(20)
-        val adapter = RoomAdapter(requireContext(), getViewModel(), this)
+        val adapter = RoomAdapter(getViewModel(), this)
         getViewModel().roomPagedList?.observe(this.viewLifecycleOwner, {
             adapter.submitList(it)
             pullToRefresh?.isRefreshing = false

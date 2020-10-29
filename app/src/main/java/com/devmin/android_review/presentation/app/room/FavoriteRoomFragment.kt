@@ -15,9 +15,6 @@ import com.devmin.android_review.presentation.app.common.BaseFragment
 import com.devmin.android_review.presentation.app.common.BaseViewHandler
 import com.devmin.android_review.presentation.app.room.adapter.RoomAdapter
 import com.devmin.android_review.presentation.extension.baseIntent
-import com.devmin.android_review.presentation.extension.makeGone
-import com.devmin.android_review.presentation.extension.makeVisible
-import com.devmin.android_review.presentation.extension.showBackToTopAnimation
 import com.google.android.material.appbar.AppBarLayout
 import kotlinx.android.synthetic.main.fragment_favorite_room.*
 import kotlin.math.abs
@@ -43,13 +40,13 @@ class FavoriteRoomFragment : BaseFragment<FavoriteRoomFragmentViewModel>(),
         favoriteReviewList?.layoutManager = LinearLayoutManager(context)
         favoriteReviewList?.setItemViewCacheSize(20)
 
-        adapter = RoomAdapter(requireContext(), getViewModel(), this)
+        adapter = RoomAdapter(getViewModel(), this)
         connectPaging()
         favoriteReviewList?.adapter = adapter
         getViewModel().filterLiveData.observe(this.viewLifecycleOwner, {
             it.getContentIfNotHandled()?.let {
                 if (adapter == null) {
-                    adapter = RoomAdapter(requireContext(), getViewModel(), this)
+                    adapter = RoomAdapter(getViewModel(), this)
                     favoriteReviewList?.adapter = adapter
                     connectPaging()
                 }

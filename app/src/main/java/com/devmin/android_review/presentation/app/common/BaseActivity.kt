@@ -1,7 +1,6 @@
 package com.devmin.android_review.presentation.app.common
 
 import android.os.Bundle
-import android.os.PersistableBundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
@@ -12,7 +11,7 @@ import dagger.android.HasAndroidInjector
 import java.lang.ref.WeakReference
 import javax.inject.Inject
 
-abstract class BaseActivity<E: BaseViewModel>: AppCompatActivity(), HasAndroidInjector {
+abstract class BaseActivity<E : BaseViewModel> : AppCompatActivity(), HasAndroidInjector {
     @Inject
     internal lateinit var viewModel: E
 
@@ -25,32 +24,40 @@ abstract class BaseActivity<E: BaseViewModel>: AppCompatActivity(), HasAndroidIn
         AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)
 
-        (getViewModel() as BaseViewModel).also{baseViewModelVal ->
-            if (!baseViewModelVal.isInitialized) {
-                baseViewModelVal.initialize()
+//        (getViewModel() as BaseViewModel).also { baseViewModelVal ->
+//            if (!baseViewModelVal.isInitialized) {
+//                baseViewModelVal.initialize()
+//            }
+//        }
+
+        with(getViewModel() as BaseViewModel) {
+            if(isInitialized.not()) {
+                initialize()
             }
         }
     }
+
     override fun androidInjector(): AndroidInjector<Any> {
         return frameworkActivityInjector
     }
 
     protected fun getViewModel(): E =
         viewModelProvider.let { vmpRef ->
-            vmpRef?.get()?:getNewViewModelProvider()
+            vmpRef?.get() ?: getNewViewModelProvider()
         }.get(viewModel::class.java)
 
     private fun getNewViewModelProvider(): ViewModelProvider {
-        val nonNullViewModelProviderVal = ViewModelProvider(viewModelStore, object : ViewModelProvider.Factory {
-            override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-                try {
-                    @Suppress("UNCHECKED_CAST")
-                    return viewModel as T
-                } catch (e: Exception) {
-                    throw RuntimeException(e)
+        val nonNullViewModelProviderVal =
+            ViewModelProvider(viewModelStore, object : ViewModelProvider.Factory {
+                override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+                    try {
+                        @Suppress("UNCHECKED_CAST")
+                        return viewModel as T
+                    } catch (e: Exception) {
+                        throw RuntimeException(e)
+                    }
                 }
-            }
-        })
+            })
         viewModelProvider = WeakReference(nonNullViewModelProviderVal)
         return nonNullViewModelProviderVal
     }

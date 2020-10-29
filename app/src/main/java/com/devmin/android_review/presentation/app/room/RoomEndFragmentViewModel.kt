@@ -8,6 +8,7 @@ import com.devmin.android_review.domain.repository.RoomRepository
 import com.devmin.android_review.entity.Room
 import com.devmin.android_review.presentation.app.common.BaseViewModel
 import com.devmin.android_review.presentation.event.Event
+import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.schedulers.Schedulers
 import timber.log.Timber
 import javax.inject.Inject
@@ -51,22 +52,30 @@ class RoomEndFragmentViewModel @Inject constructor() : BaseViewModel() {
     }
 
     private fun create(room: Room) {
-        favoriteSet.add("${room.id}")
-        pref.putStringSet(AndroidPrefUtilService.Key.FAVORITE_ID, favoriteSet).blockingAwait()
-        roomRepository.refreshSubject.onNext(room.id)
-        val disposable = roomRepository.create(room, true).subscribeOn(Schedulers.newThread())
+        val disposable = updateRoom(room, false)
             .subscribe()
         addDisposable(disposable)
     }
 
     private fun delete(room: Room) {
-        favoriteSet.remove("${room.id}")
-        pref.putStringSet(AndroidPrefUtilService.Key.FAVORITE_ID, favoriteSet).blockingAwait()
-        roomRepository.refreshSubject.onNext(room.id)
-        val disposable = roomRepository.delete(room, true)
-            .subscribeOn(Schedulers.newThread())
+        val disposable = updateRoom(room, true)
             .subscribe()
         addDisposable(disposable)
+    }
+
+    private fun updateRoom(room: Room, isDelete: Boolean): Completable {
+        if (isDelete) {
+            favoriteSet.remove("${room.id}")
+        } else {
+            favoriteSet.add("${room.id}")
+        }
+        pref.putStringSet(AndroidPrefUtilService.Key.FAVORITE_ID, favoriteSet).blockingAwait()
+        roomRepository.refreshSubject.onNext(room.id)
+        return if (isDelete) {
+            roomRepository.delete(room, true)
+        } else {
+            roomRepository.create(room, true)
+        }.subscribeOn(Schedulers.newThread())
     }
 
     fun like() {
